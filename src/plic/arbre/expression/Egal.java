@@ -19,11 +19,6 @@ public class Egal extends Comparaison {
 
     @Override
     public void verifier() {
-
     }
 
-    @Override
-    public String toMIPS() {
-        return null;
-    }
 }

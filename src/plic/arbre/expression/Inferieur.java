@@ -21,9 +21,4 @@ public class Inferieur extends Comparaison {
     public void verifier() {
 
     }
-
-    @Override
-    public String toMIPS() {
-        return null;
-    }
 }

@@ -7,19 +7,35 @@ package plic.arbre.expression;
  */
 
 public abstract class Unaire extends Expression {
-    
-    protected Expression expression ;
+
+    protected Expression expression;
 
     protected Unaire(Expression expr) {
         super(expr.getNoLigne());
-        expression = expr ;
+        expression = expr;
     }
-    
-    public abstract String operateur() ;
+
+
+    @Override
+    public String toMIPS() {
+        StringBuilder strb = new StringBuilder();
+        strb.append(expression.toMIPS());
+        switch (operateur()) {
+            case " non ":
+                strb.append("not $v0, $v0\n");
+                break;
+            case "- ":
+                strb.append("neg $v0, $v0\n");
+                break;
+        }
+        return strb.toString();
+    }
+
+    public abstract String operateur();
 
     @Override
     public String toString() {
-        return "(" + operateur() + expression + ")" ;
+        return "(" + operateur() + expression + ")";
     }
 
 }

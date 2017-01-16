@@ -22,8 +22,4 @@ public class Superieur extends Comparaison {
 
     }
 
-    @Override
-    public String toMIPS() {
-        return null;
-    }
 }

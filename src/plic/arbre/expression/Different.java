@@ -22,8 +22,4 @@ public class Different extends Comparaison {
 
     }
 
-    @Override
-    public String toMIPS() {
-        return null;
-    }
 }

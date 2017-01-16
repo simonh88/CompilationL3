@@ -22,8 +22,4 @@ public class OuLogique extends BinaireLogique {
 
     }
 
-    @Override
-    public String toMIPS() {
-        return null;
-    }
 }

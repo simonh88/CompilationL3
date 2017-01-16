@@ -22,8 +22,4 @@ public class MoinsUnaire extends Unaire {
 
     }
 
-    @Override
-    public String toMIPS() {
-        return null;
-    }
 }

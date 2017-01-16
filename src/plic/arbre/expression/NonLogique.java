@@ -21,9 +21,4 @@ public class NonLogique extends Unaire {
     public void verifier() {
 
     }
-
-    @Override
-    public String toMIPS() {
-        return null;
-    }
 }

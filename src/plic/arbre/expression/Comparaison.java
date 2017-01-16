@@ -12,4 +12,6 @@ public abstract class Comparaison extends Binaire {
         super(gauche, droite);
     }
 
+
+
 }

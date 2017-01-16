@@ -21,9 +21,4 @@ public class EtLogique extends BinaireLogique {
     public void verifier() {
 
     }
-
-    @Override
-    public String toMIPS() {
-        return null;
-    }
 }

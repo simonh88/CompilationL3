@@ -21,9 +21,4 @@ public class Div extends BinaireArithmetique {
     public void verifier() {
 
     }
-
-    @Override
-    public String toMIPS() {
-        return null;
-    }
 }

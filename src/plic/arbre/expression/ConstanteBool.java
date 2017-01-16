@@ -19,6 +19,9 @@ public class ConstanteBool extends Constante {
 
     @Override
     public String toMIPS() {
-        return null;
+        String s;
+        if(cste.equals("faux")) s = "li $v0, 0\n";
+        else s = "li $v0, 0\n";
+        return s;
     }
 }
