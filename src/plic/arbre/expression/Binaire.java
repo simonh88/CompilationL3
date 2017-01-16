@@ -45,10 +45,10 @@ public abstract class Binaire extends Expression {
         //On différencie les cas
         switch(this.operateur()){
             //COMPARAISON
-            case "==":
+            case " == ":
                 strb.append("seq $v0, $t8, $v0\n");
                 break;
-            case "!=":
+            case " != ":
                 strb.append("sne $v0, $t8, $v0\n");
                 break;
             case " > ":

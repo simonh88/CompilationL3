@@ -9,6 +9,7 @@ import plic.analyse.AnalyseurSyntaxique;
 import plic.arbre.ArbreAbstrait;
 import plic.exceptions.AnalyseException;
 
+
 /**
  * 24 mars 2015 
  * 
@@ -23,7 +24,7 @@ public class Plic {
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
             System.err.println("expression stockée dans l'arbre : " + arbre);
             System.out.println(arbre.toMIPS());
-            
+
         } 
         catch (FileNotFoundException ex) {
             System.err.println("Fichier " + fichier + " inexistant") ;

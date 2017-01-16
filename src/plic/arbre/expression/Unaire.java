@@ -22,10 +22,12 @@ public abstract class Unaire extends Expression {
         strb.append(expression.toMIPS());
         switch (operateur()) {
             case " non ":
+                //
                 strb.append("not $v0, $v0\n");
+                strb.append("andi $v0, $v0, 0x1\n");
                 break;
             case "- ":
-                strb.append("neg $v0, $v0\n");
+                strb.append("neg $v0, $t8\n");
                 break;
         }
         return strb.toString();

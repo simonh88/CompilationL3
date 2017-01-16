@@ -1,1 +1,1 @@
-non (5 > (12 + 2 - 25)) ou faux
+non (5 < (12 + 2 - 25)) ou faux
