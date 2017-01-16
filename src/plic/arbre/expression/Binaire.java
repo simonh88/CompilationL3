@@ -30,18 +30,26 @@ public abstract class Binaire extends Expression {
         StringBuilder strb = new StringBuilder();
         //On charge la valeur de gauche dans v0
         strb.append(gauche.toMIPS());
-        //v0 dans t8
-        strb.append("move $t8, $v0\n");
+        //On stock v0 dans $sp
+        strb.append("addi $sp, $sp, -4\n");
+        strb.append("sw $v0, 0($sp)\n");
+
         //charge la valeur de droite dans v0
         strb.append(droite.toMIPS());
+
+
+        //On récupère $v0 de $sp
+        strb.append("lw $t8, 0($sp)\n");
+        strb.append("addi $sp, $sp, 4\n");
+
         //On différencie les cas
         switch(this.operateur()){
             //COMPARAISON
             case "==":
-                strb.append("seq $v0, $v0, $t8\n");
+                strb.append("seq $v0, $t8, $v0\n");
                 break;
             case "!=":
-                strb.append("sne $v0, $v0, $t8\n");
+                strb.append("sne $v0, $t8, $v0\n");
                 break;
             case " > ":
                 strb.append("sgt $v0, $t8, $v0\n");
