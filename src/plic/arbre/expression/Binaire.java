@@ -18,6 +18,8 @@ public abstract class Binaire extends Expression {
     }
     
     public abstract String operateur() ;
+    
+    public abstract void verifier();
 
     @Override
     public String toString() {

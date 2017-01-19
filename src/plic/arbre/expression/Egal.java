@@ -17,8 +17,4 @@ public class Egal extends Comparaison {
         return " == ";
     }
 
-    @Override
-    public void verifier() {
-    }
-
 }

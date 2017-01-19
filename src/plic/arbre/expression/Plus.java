@@ -1,5 +1,7 @@
 package plic.arbre.expression;
 
+import plic.exceptions.AnalyseSemantiqueException;
+
 /**
  * 3 déc. 2015
  *
@@ -17,9 +19,7 @@ public class Plus extends BinaireArithmetique {
         return " + " ;
     }
 
-    @Override
-    public void verifier() {
 
-    }
+
 
 }

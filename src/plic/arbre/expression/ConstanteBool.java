@@ -16,6 +16,10 @@ public class ConstanteBool extends Constante {
     public void verifier() {
 
     }
+    
+    public String type(){
+    	return "booleen";
+    }
 
     @Override
     public String toMIPS() {

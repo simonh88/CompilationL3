@@ -1,5 +1,7 @@
 package plic.arbre.expression;
 
+import plic.exceptions.AnalyseSemantiqueException;
+
 /**
  * 3 déc. 2015
  *
@@ -19,7 +21,16 @@ public class MoinsUnaire extends Unaire {
 
     @Override
     public void verifier() {
-
+    	String type = expression.type();
+    	if(!type.equals("entier")){
+    		throw new AnalyseSemantiqueException("L'expression n'est pas une expression entiere");
+    	}
     }
+
+	@Override
+	protected String type() {
+		// TODO Auto-generated method stub
+		return "entier";
+	}
 
 }

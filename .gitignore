@@ -1,3 +1,7 @@
 Compilation.iml
 .idea
 out
+.classpath
+.project
+.settings/
+bin/

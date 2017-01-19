@@ -17,9 +17,5 @@ public class Superieur extends Comparaison {
         return " > ";
     }
 
-    @Override
-    public void verifier() {
-
-    }
 
 }

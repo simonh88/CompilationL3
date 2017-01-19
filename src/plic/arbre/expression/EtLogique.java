@@ -16,9 +16,4 @@ public class EtLogique extends BinaireLogique {
     public String operateur() {
         return " et " ;
     }
-
-    @Override
-    public void verifier() {
-
-    }
 }

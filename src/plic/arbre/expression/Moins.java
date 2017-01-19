@@ -17,9 +17,6 @@ public class Moins extends BinaireArithmetique {
         return " - ";
     }
 
-    @Override
-    public void verifier() {
 
-    }
 
 }

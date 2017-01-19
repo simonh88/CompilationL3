@@ -1,5 +1,7 @@
 package plic.arbre.expression;
 
+import plic.exceptions.AnalyseSemantiqueException;
+
 /**
  * 3 déc. 2015
  *
@@ -17,8 +19,11 @@ public class Div extends BinaireArithmetique {
         return " / ";
     }
 
-    @Override
-    public void verifier() {
-
+    public void verifier(){
+    	super.verifier();
+    	if(((ConstanteEntiere)droite).getCste().equals("0")){
+    		throw new AnalyseSemantiqueException("Division par 0 interdite");
+    	}
     }
+
 }

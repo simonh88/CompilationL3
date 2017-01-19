@@ -14,7 +14,9 @@ public abstract class Constante extends Expression {
         super(n) ;
         cste = texte ;
     }
-
+    
+    protected abstract String type();
+    
     @Override
     public String toString() {
         return cste ;

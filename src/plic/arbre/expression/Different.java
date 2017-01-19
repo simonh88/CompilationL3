@@ -17,9 +17,4 @@ public class Different extends Comparaison {
         return " != ";
     }
 
-    @Override
-    public void verifier() {
-
-    }
-
 }

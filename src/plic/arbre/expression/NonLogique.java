@@ -1,5 +1,7 @@
 package plic.arbre.expression;
 
+import plic.exceptions.AnalyseSemantiqueException;
+
 /**
  * 3 déc. 2015
  *
@@ -19,6 +21,15 @@ public class NonLogique extends Unaire {
 
     @Override
     public void verifier() {
-
+    	String type = expression.type();
+    	if(!type.equals("booleen")){
+    		throw new AnalyseSemantiqueException("L'expression n'est pas une expression booleenne");
+    	}
     }
+
+	@Override
+	protected String type() {
+		// TODO Auto-generated method stub
+		return "booleen";
+	}
 }

@@ -11,15 +11,24 @@ public class ConstanteEntiere extends Constante {
     public ConstanteEntiere(String texte, int n) {
         super(texte, n) ;
     }
-
-    @Override
-    public void verifier() {
-
+    
+    public String type(){
+    	return "entier";
     }
-
+    
     @Override
     public String toMIPS() {
         String s = "li $v0, "+ this.cste+ "\n";
         return s;
     }
+
+    public String getCste(){
+    	return this.cste;
+    }
+    
+	@Override
+	public void verifier() {
+		// TODO Auto-generated method stub
+		
+	}
 }
