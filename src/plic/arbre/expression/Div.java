@@ -21,7 +21,7 @@ public class Div extends BinaireArithmetique {
 
     public void verifier(){
     	super.verifier();
-    	if(((ConstanteEntiere)droite).getCste().equals("0")){
+    	if(droite.toString().equals("0")){
     		throw new AnalyseSemantiqueException("Division par 0 interdite");
     	}
     }
