@@ -25,11 +25,14 @@ public class BlocDInstructions extends ArbreAbstrait {
         strb.append(this.header());
         strb.append(expr.toMIPS()+"\n");
         strb.append(this.footer());
+        strb.append(this.error_div_0());
         return strb.toString();
     }
 
     private String header(){
         StringBuilder strb = new StringBuilder();
+        strb.append(".data\n");
+        strb.append("str_div_by_0:\t.asciiz \"Exception : Division par zero interdite\" \n");
         strb.append(".text\n");
         strb.append("main :\n");
         strb.append("move $s7,$sp\n");
@@ -41,7 +44,17 @@ public class BlocDInstructions extends ArbreAbstrait {
         strb.append("end :\n");
         strb.append("move $v1, $v0\n");
         strb.append("li $v0, 10\n");
-        strb.append("syscall");
+        strb.append("syscall\n");
+        return strb.toString();
+    }
+    private String error_div_0(){
+        StringBuilder strb = new StringBuilder();
+
+        strb.append("print_exception_div_zero:\n");
+        strb.append("li $v0, 4\n");
+        strb.append("la $a0, str_div_by_0\n");
+        strb.append("syscall\n");
+        strb.append("b end\n");
         return strb.toString();
     }
 

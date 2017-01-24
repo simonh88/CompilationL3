@@ -70,6 +70,8 @@ public abstract class Binaire extends Expression {
                 strb.append("mul $v0, $t8, $v0\n");
                 break;
             case " / ":
+                //Branchement pour vérifier si l'opérande de droit est égal à 0(calcul)
+                strb.append("beq $v0, $zero, print_exception_div_zero\n");
                 strb.append("div $v0, $t8, $v0\n");
                 break;
             //BINAIRE LOGIQUE

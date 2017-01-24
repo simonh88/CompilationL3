@@ -1,12 +1,10 @@
 # CompilationL3
 Projet de compilation L3
 
+Les ToMips sont finis, et tester rapidement, ça à l'air bon.
 
-TODO ANTOINE :
- =>LOGIQUE
+Il reste donc les vérifs à faire !
 
-TODO THOMAS :
+TODO THOMAS-ANTOINE :
  =>Vérifications
 
-TODO SIMON :
- =>Arithmétique
