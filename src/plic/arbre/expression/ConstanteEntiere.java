@@ -21,10 +21,6 @@ public class ConstanteEntiere extends Constante {
         String s = "li $v0, "+ this.cste+ "\n";
         return s;
     }
-
-    public String getCste(){
-    	return this.cste;
-    }
     
 	@Override
 	public void verifier() {
