@@ -28,8 +28,12 @@ import plic.exceptions.AnalyseLexicaleException;
   }
 %}
 
+
+idf   = [_a-zA-Z][_a-zA-Z0-9]{0,30}
+
 csteE = [0-9]+
 csteB = "vrai" | "faux"
+csteC = "\"" [_a-zA-Z][_a-zA-Z0-9]{0,80} "\""
 
 finDeLigne = \r|\n
 espace = {finDeLigne}  | [ \t\f]
@@ -41,21 +45,35 @@ espace = {finDeLigne}  | [ \t\f]
 "*"                	{ return symbol(CodesLexicaux.MULT); }
 "/"                	{ return symbol(CodesLexicaux.DIV); }
 
-"=="                    { return symbol(CodesLexicaux.EGALEGAL); }
-"!="                    { return symbol(CodesLexicaux.DIFF); }
+"=="                { return symbol(CodesLexicaux.EGALEGAL); }
+"!="                { return symbol(CodesLexicaux.DIFF); }
 "<"                	{ return symbol(CodesLexicaux.INF); }
 ">"                	{ return symbol(CodesLexicaux.SUP); }
 
-"et"                	{ return symbol(CodesLexicaux.ET); }
-"ou"                	{ return symbol(CodesLexicaux.OU); }
-"non"                	{ return symbol(CodesLexicaux.NON); }
+"et"                { return symbol(CodesLexicaux.ET); }
+"ou"                { return symbol(CodesLexicaux.OU); }
+"non"               { return symbol(CodesLexicaux.NON); }
 
 "("                	{ return symbol(CodesLexicaux.PAROUV); }
 ")"                	{ return symbol(CodesLexicaux.PARFER); }
 
-{csteE}      	        { return symbol(CodesLexicaux.CONSTANTEINT, yytext()); }
-{csteB}      	        { return symbol(CodesLexicaux.CONSTANTEBOOL, yytext()); }
+","                	{ return symbol(CodesLexicaux.VIRGULE); }
+";"                	{ return symbol(CodesLexicaux.POINTVIRGULE); }
+"="                	{ return symbol(CodesLexicaux.EGAL); }
 
-{espace}                { }
+"classe"            { return symbol(CodesLexicaux.INSTCLASSE); }
+"publique"          { return symbol(CodesLexicaux.PUBLIQUE); }
+"privee"            { return symbol(CodesLexicaux.PRIVEE); }
+"ecrire"            { return symbol(CodesLexicaux.INSTECRIRE); }
 
-.                       { throw new AnalyseLexicaleException(yyline, yycolumn, yytext()) ; }
+"entier"            { return symbol(CodesLexicaux.ENTIER); }
+
+{csteE}      	    { return symbol(CodesLexicaux.CONSTANTEINT, yytext()); }
+{csteB}      	    { return symbol(CodesLexicaux.CONSTANTEBOOL, yytext()); }
+{csteC}      	    { return symbol(CodesLexicaux.CONSTANTECHAINE, yytext()); }
+
+{idf}      	        { return symbol(CodesLexicaux.IDF, yytext()); }
+
+{espace}            { }
+
+.                   { throw new AnalyseLexicaleException(yyline, yycolumn, yytext()) ; }

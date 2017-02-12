@@ -68,12 +68,17 @@ parser code {:
 
 terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER ;
 terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON ;
-terminal String    CONSTANTEINT, CONSTANTEBOOL ;
+terminal Symbol    INSTCLASSE, IDF, PUBLIQUE, PRIVEE, INSTECRIRE ;
+terminal Symbol    VIRGULE, POINTVIRGULE, EGAL ;
+terminal Symbol    ENTIER ;
+terminal String    CONSTANTEINT, CONSTANTEBOOL, CONSTANTECHAINE ;
    
 /* Non terminals used in the grammar section.  */
 
 non terminal ArbreAbstrait PROG ;
 non terminal Expression EXPR, CSTE ;
+non terminal ArbreAbstrait SYSTEME, DECLARATION, DECL_CHAMP, DECL_CONST ;
+non terminal ArbreAbstrait CLASSE, LDECL, LIDF, LINST, INSTRUCTION, STATUT, TYPE, AFFECT, ECRIRE ;
 
 precedence left INF, SUP ;
 precedence left EGALEGAL, DIFF;
@@ -85,17 +90,58 @@ precedence left NON ;
 
 /* ----------------------------Grammar Section-------------------- */
  
-start with PROG ;
+start with SYSTEME ;
 
-PROG    ::=     EXPR:e 
+SYSTEME ::=     CLASSE:c
+        ;
+
+CLASSE  ::=     INSTCLASSE:c IDF:i LDECL
+        ;
+
+LDECL   ::=     LDECL DECLARATION
+        |       DECLARATION
+        ;
+
+DECLARATION ::= DECL_CHAMP | DECL_CONST
+            ;
+
+DECL_CHAMP  ::= STATUT TYPE LIDF POINTVIRGULE
+            ;
+
+LIDF    ::=     LIDF VIRGULE IDF
+        |       IDF
+        ;
+
+STATUT  ::=     PUBLIQUE | ​ PRIVEE
+        ;
+
+TYPE    ::=     ENTIER
+        ;
+
+DECL_CONST  ::= LINST
+            ;
+
+LINST   ::=     LINST INSTRUCTION
+        |       INSTRUCTION
+        ;
+
+INSTRUCTION ::= AFFECT | ECRIRE
+            ;
+
+AFFECT  ::=     IDF EGAL​ EXPR POINTVIRGULE
+        ;
+
+ECRIRE  ::=     INSTECRIRE EXPR POINTVIRGULE​ | ECRIRE CONSTANTECHAINE POINTVIRGULE
+        ;
+
+PROG    ::=     EXPR:e
                 {: BlocDInstructions arbre = new BlocDInstructions(eleft+1) ;
                    arbre.ajouter(e) ;
                    RESULT = arbre ; :}
-                ;
+        ;
     
-EXPR    ::=     EXPR:g  PLUS  EXPR:d
-                {: RESULT = new Plus(g, d) ; :}
-        | 
+EXPR    ::=     EXPR POINTVIRGULE
+        |
                 EXPR:g  MOINS  EXPR:d
                 {: RESULT = new Moins(g, d); :}
         |                
@@ -134,10 +180,10 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
         |
                 PAROUV  EXPR:e  PARFER
                 {: RESULT = e ; :}
-                ;
+        ;
 
 CSTE    ::=     CONSTANTEINT:e 
                 {: RESULT = new ConstanteEntiere(e, eleft+1) ; :}
         |       CONSTANTEBOOL:e 
                 {: RESULT = new ConstanteBool(e, eleft+1) ; :}
-                ;
+        ;

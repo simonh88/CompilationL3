@@ -889,7 +889,7 @@ public class AnalyseurLexical implements java_cup.runtime.Scanner {
             }
           case 51: break;
           case 25: 
-            { return symbol(CodesLexicaux.INSTCLASSE);
+            { return symbol(CodesLexicaux.CLASSE);
             }
           case 52: break;
           case 26: 
