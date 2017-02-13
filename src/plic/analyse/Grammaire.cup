@@ -29,6 +29,11 @@ parser code {:
         lesTerminaux.put(new Integer(CodesLexicaux.ET), "et") ;
         lesTerminaux.put(new Integer(CodesLexicaux.OU), "ou") ;
         lesTerminaux.put(new Integer(CodesLexicaux.NON), "non") ;
+        lesTerminaux.put(new Integer(CodesLexicaux.EGAL), "=");
+        lesTerminaux.put(new Integer(CodesLexicaux.POINTVIRGULE), ";");
+        lesTerminaux.put(new Integer(CodesLexicaux.PRIVEE), "privee");
+        lesTerminaux.put(new Integer(CodesLexicaux.PUBLIQUE), "publique");
+        
 
         StringBuffer m = new StringBuffer() ;
 
@@ -44,6 +49,12 @@ parser code {:
             if (s.value != null) {
                 lesTerminaux.put(CodesLexicaux.CONSTANTEINT, "" + s.value) ;
                 lesTerminaux.put(CodesLexicaux.CONSTANTEBOOL, "" + s.value) ;
+                lesTerminaux.put(CodesLexicaux.CONSTANTECHAINE, "" + s.value) ;
+                lesTerminaux.put(CodesLexicaux.IDF, "" + s.value) ;
+                lesTerminaux.put(CodesLexicaux.ENTIER, "" + s.value) ;
+                lesTerminaux.put(CodesLexicaux.INSTECRIRE, "" + s.value) ;
+                lesTerminaux.put(CodesLexicaux.INSTCLASSE, "" + s.value) ;
+                
             }
 
             if (lesTerminaux.containsKey(new Integer(s.sym))) {
@@ -75,7 +86,7 @@ terminal String    CONSTANTEINT, CONSTANTEBOOL, CONSTANTECHAINE ;
    
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG ;
+/*non terminal ArbreAbstrait PROG ;*/
 non terminal Expression EXPR, CSTE ;
 non terminal ArbreAbstrait SYSTEME, DECLARATION, DECL_CHAMP, DECL_CONST ;
 non terminal ArbreAbstrait CLASSE, LDECL, LIDF, LINST, INSTRUCTION, STATUT, TYPE, AFFECT, ECRIRE ;
@@ -119,7 +130,7 @@ TYPE    ::=     ENTIER
         ;
 
 DECL_CONST  ::= LINST
-            ;
+		;
 
 LINST   ::=     LINST INSTRUCTION
         |       INSTRUCTION
@@ -131,16 +142,16 @@ INSTRUCTION ::= AFFECT | ECRIRE
 AFFECT  ::=     IDF EGAL EXPR POINTVIRGULE
         ;
 
-ECRIRE  ::=     INSTECRIRE EXPR POINTVIRGULE | ECRIRE CONSTANTECHAINE POINTVIRGULE
+ECRIRE  ::=     INSTECRIRE EXPR POINTVIRGULE 
+		| 		ECRIRE CONSTANTECHAINE POINTVIRGULE
         ;
 
-PROG    ::=     EXPR:e
-                {: BlocDInstructions arbre = new BlocDInstructions(eleft+1) ;
-                   arbre.ajouter(e) ;
-                   RESULT = arbre ; :}
-        ;
     
 EXPR    ::=     EXPR POINTVIRGULE
+        |
+        		EXPR:g PLUS EXPR:d
+        		{: RESULT = new PLUS(g, d); :}
+        
         |
                 EXPR:g  MOINS  EXPR:d
                 {: RESULT = new Moins(g, d); :}
