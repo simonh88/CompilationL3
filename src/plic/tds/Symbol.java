@@ -5,14 +5,15 @@ package plic.tds;
  */
 public class Symbol {
 
+
     private String statut;
     private String type;
     private int deplacement;
 
-    public Symbol(String statut, String type, int deplacement){
+    public Symbol(String statut, String type){
         this.statut = statut;
         this.type = type;
-        this.deplacement = deplacement;
+        this.deplacement = TDS.getInstance().getTailleZoneDesVariables();;
     }
 
     public String getStatut() {

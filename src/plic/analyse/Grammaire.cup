@@ -3,11 +3,14 @@ package plic.analyse ;
 import java.util.*;
 import plic.arbre.* ;
 import plic.arbre.expression.* ;
+import plic.declarations.* ;
 import plic.exceptions.AnalyseSyntaxiqueException;
+import plic.tds.*;
+import plic.tds.Symbol;
 
 import java_cup.runtime.*;
 
-action code {: 
+action code {:
              :} ;
 
 parser code {:
@@ -15,7 +18,7 @@ parser code {:
     public void report_error(String message, Object info) {
 
         HashMap<Integer, String> lesTerminaux = new HashMap<>() ;
-    
+
         lesTerminaux.put(new Integer(CodesLexicaux.PLUS), "+") ;
         lesTerminaux.put(new Integer(CodesLexicaux.MOINS), "-") ;
         lesTerminaux.put(new Integer(CodesLexicaux.MULT), "*") ;
@@ -29,39 +32,32 @@ parser code {:
         lesTerminaux.put(new Integer(CodesLexicaux.ET), "et") ;
         lesTerminaux.put(new Integer(CodesLexicaux.OU), "ou") ;
         lesTerminaux.put(new Integer(CodesLexicaux.NON), "non") ;
-        lesTerminaux.put(new Integer(CodesLexicaux.EGAL), "=");
-        lesTerminaux.put(new Integer(CodesLexicaux.POINTVIRGULE), ";");
-        lesTerminaux.put(new Integer(CodesLexicaux.PRIVEE), "privee");
-        lesTerminaux.put(new Integer(CodesLexicaux.PUBLIQUE), "publique");
-        
+        lesTerminaux.put(new Integer(CodesLexicaux.CLASSETERM), "classe") ;
+        lesTerminaux.put(new Integer(CodesLexicaux.ECRIRETERM), "ecrire") ;
+        lesTerminaux.put(new Integer(CodesLexicaux.IDFTERM), "idf") ;
+        lesTerminaux.put(new Integer(CodesLexicaux.ENTIER), "entier") ;
 
         StringBuffer m = new StringBuffer() ;
 
         if (info instanceof java_cup.runtime.Symbol) {
             java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
 
-            if (s.left >= 0) {                
+            if (s.left >= 0) {
                 m.append("\tligne : " + (s.left + 1)) ;
-                if (s.right >= 0)                    
+                if (s.right >= 0)
                     m.append(" colonne : " + (s.right+1)) ;
             }
-            
+
             if (s.value != null) {
                 lesTerminaux.put(CodesLexicaux.CONSTANTEINT, "" + s.value) ;
                 lesTerminaux.put(CodesLexicaux.CONSTANTEBOOL, "" + s.value) ;
-                lesTerminaux.put(CodesLexicaux.CONSTANTECHAINE, "" + s.value) ;
-                lesTerminaux.put(CodesLexicaux.IDF, "" + s.value) ;
-                lesTerminaux.put(CodesLexicaux.ENTIER, "" + s.value) ;
-                lesTerminaux.put(CodesLexicaux.INSTECRIRE, "" + s.value) ;
-                lesTerminaux.put(CodesLexicaux.INSTCLASSE, "" + s.value) ;
-                
             }
 
             if (lesTerminaux.containsKey(new Integer(s.sym))) {
                 m.append(" dernier token lu : " + lesTerminaux.get(new Integer(s.sym))) ;
             }
             else {
-                m.append(" expression non terminée") ;
+                m.append(" expression non terminee : " + s.sym) ;
             }
 
         }
@@ -72,24 +68,41 @@ parser code {:
         report_error(message, info);
     }
 :};
-   
+
 /* ------------Declaration of Terminals and Non Terminals Section----------- */
-   
+
 /* Terminals (tokens returned by the scanner).  */
 
 terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER ;
 terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON ;
-terminal Symbol    INSTCLASSE, IDF, PUBLIQUE, PRIVEE, INSTECRIRE ;
-terminal Symbol    VIRGULE, POINTVIRGULE, EGAL ;
-terminal Symbol    ENTIER ;
-terminal String    CONSTANTEINT, CONSTANTEBOOL, CONSTANTECHAINE ;
-   
+terminal String    CONSTANTEINT, CONSTANTEBOOL ;
+
+/*
+  Le mot clé classe est nommé CLASSETERM pour ne pas entrer en conflit avec
+  avec la règle nommé CLASSE
+*/
+
+terminal Symbol    ECRIRETERM, POINTVIRGULE, VIRGULE, CLASSETERM, FIN, PUBLIQUE ;
+terminal Symbol    PRIVEE, ENTIER, EGAL ;
+terminal String    IDFTERM, CONSTANTECHAINE ;
+
 /* Non terminals used in the grammar section.  */
 
-/*non terminal ArbreAbstrait PROG ;*/
+non terminal ArbreAbstrait SYSTEME ;
+non terminal Classe CLASSE ;
+non terminal Declaration DECLARATION ;
+non terminal DeclarationConstante DECL_CSTE;
+non terminal Declaration DECL_CHAMP ;
 non terminal Expression EXPR, CSTE ;
-non terminal ArbreAbstrait SYSTEME, DECLARATION, DECL_CHAMP, DECL_CONST ;
-non terminal ArbreAbstrait CLASSE, LDECL, LIDF, LINST, INSTRUCTION, STATUT, TYPE, AFFECT, ECRIRE ;
+non terminal String STATUS ;
+non terminal Affectation AFFECT ;
+non terminal AccesVariable ACCESS ;
+non terminal Ecrire ECRIRE ;
+non terminal Instruction INSTRUCTION ;
+non terminal BlocDeDeclarations DECLARATIONS ;
+non terminal Idf IDF;
+non terminal ArrayList<Idf> IDFS;
+non terminal String TYPE;
 
 precedence left INF, SUP ;
 precedence left EGALEGAL, DIFF;
@@ -100,89 +113,167 @@ precedence left ET ;
 precedence left NON ;
 
 /* ----------------------------Grammar Section-------------------- */
- 
+
 start with SYSTEME ;
 
-SYSTEME ::=     CLASSE:c
-        ;
+SYSTEME ::= CLASSE:c {: RESULT = c; :} ;
 
-CLASSE  ::=     INSTCLASSE:c IDF:i LDECL
-        ;
+CLASSE ::= CLASSETERM IDF:i DECLARATIONS:ds FIN
+           {:
+                RESULT = new Classe(i, ds, ileft+1);
+           :}
+           | CLASSETERM IDF:i FIN
+           {:
+                RESULT = new Classe(i, null, ileft+1);
+           :}
+           ;
 
-LDECL   ::=     LDECL DECLARATION
-        |       DECLARATION
-        ;
+DECLARATIONS ::= DECLARATIONS:ds DECLARATION:d
+            {:
+                if (d != null) {
+                    ds.ajouter(d);
+                }
 
-DECLARATION ::= DECL_CHAMP | DECL_CONST
+                RESULT = ds;
+            :}
+            | DECLARATION:d
+            {:
+                BlocDeDeclarations ds = new BlocDeDeclarations(dleft+1);
+                if (d != null) {
+                    ds.ajouter(d);
+                }
+
+                RESULT = ds;
+            :}
             ;
 
-DECL_CHAMP  ::= STATUT TYPE LIDF POINTVIRGULE
+DECLARATION ::= DECL_CHAMP:d
+                {:
+
+                :}
+                | DECL_CSTE:d
+                {:
+                    RESULT = d;
+                :}
+                ;
+
+DECL_CHAMP ::= STATUS:s TYPE:t IDFS:i POINTVIRGULE
+               {:
+                    // Ici, i est une arrayList de String
+                    for (Idf champ : i) {
+                        TDS.getInstance().ajouter(new Entree(champ.getNom()), new Symbol(s, t));
+                    }
+               :}
+               ;
+
+IDFS ::= IDFS:is VIRGULE IDF:i
+      {:
+        is.add(i);
+        RESULT = is;
+
+      :}
+      | IDF:i
+      {:
+        ArrayList<Idf> idfs = new ArrayList<Idf>();
+        idfs.add(i);
+        RESULT = idfs;
+      :}
+      ;
+
+IDF ::= IDFTERM:nom
+    {:
+        RESULT = new Idf(nom, nomleft+1);
+    :}
+    ;
+
+STATUS ::= PUBLIQUE
+        {:
+            RESULT = "publique";
+        :}
+        | PRIVEE
+        {:
+            RESULT = "privee";
+        :}
+        ;
+
+TYPE ::= ENTIER:e
+      {:
+            RESULT = "entier";
+      :}
+      ;
+
+DECL_CSTE ::= INSTRUCTION:i
+           {:
+                RESULT = i;
+           :}
+           ;
+
+INSTRUCTION ::= AFFECT:a
+            {:
+                RESULT = a;
+            :}
+            | ECRIRE:e
+            {:
+                RESULT = e;
+            :}
             ;
 
-LIDF    ::=     LIDF VIRGULE IDF
-        |       IDF
+AFFECT ::= IDF:i EGAL EXPR:e POINTVIRGULE
+        {:
+            RESULT = new Affectation(i, e, ileft+1);
+        :}
         ;
 
-STATUT  ::=     PUBLIQUE | PRIVEE
-        ;
+ACCESS ::= IDF:i
+      {:
+        RESULT = new AccesVariable(i, ileft+1);
+      :}
+      ;
 
-TYPE    ::=     ENTIER
-        ;
+ECRIRE ::= ECRIRETERM EXPR:e POINTVIRGULE
+      {:
+            RESULT = new EcrireExpression(e, eleft+1);
+      :}
+       | ECRIRETERM CONSTANTECHAINE:c POINTVIRGULE
+      {:
+            TDC.getInstance().ajouter(c);
+            RESULT = new EcrireChaine(c, cleft+1);
+      :}
+      ;
 
-DECL_CONST  ::= LINST
-		;
-
-LINST   ::=     LINST INSTRUCTION
-        |       INSTRUCTION
-        ;
-
-INSTRUCTION ::= AFFECT | ECRIRE
-            ;
-
-AFFECT  ::=     IDF EGAL EXPR POINTVIRGULE
-        ;
-
-ECRIRE  ::=     INSTECRIRE EXPR POINTVIRGULE 
-		| 		ECRIRE CONSTANTECHAINE POINTVIRGULE
-        ;
-
-    
-EXPR    ::=     EXPR POINTVIRGULE
-        |
-        		EXPR:g PLUS EXPR:d
-        		{: RESULT = new PLUS(g, d); :}
-        
+EXPR    ::=     EXPR:g  PLUS  EXPR:d
+                {: RESULT = new Plus(g, d) ; :}
         |
                 EXPR:g  MOINS  EXPR:d
                 {: RESULT = new Moins(g, d); :}
-        |                
+        |
                 EXPR:g  MULT  EXPR:d
                 {: RESULT = new Mult(g, d); :}
-        |                
+        |
                 EXPR:g  DIV  EXPR:d
                 {: RESULT = new Div(g, d); :}
-        |       
+        |
                 EXPR:g  INF  EXPR:d
                 {: RESULT = new Inferieur(g, d); :}
-        |       
+        |
                 EXPR:g  SUP  EXPR:d
                 {: RESULT = new Superieur(g, d); :}
-        |              
+        |
                 EXPR:g  EGALEGAL  EXPR:d
                 {: RESULT = new Egal(g, d); :}
-        |       
+        |
                 EXPR:g  DIFF  EXPR:d
                 {: RESULT = new Different(g, d); :}
-        |                      
-                MOINS  EXPR:e  
+        |
+                MOINS  EXPR:e
                 {: RESULT = new MoinsUnaire(e); :}
-        |      
+        |
                 EXPR:g  ET  EXPR:d
                 {: RESULT = new EtLogique(g, d); :}
-        |      
+        |
                 EXPR:g  OU  EXPR:d
                 {: RESULT = new OuLogique(g, d); :}
-        |      
+        |
                 NON EXPR:e
                 {: RESULT = new NonLogique(e); :}
         |
@@ -191,10 +282,15 @@ EXPR    ::=     EXPR POINTVIRGULE
         |
                 PAROUV  EXPR:e  PARFER
                 {: RESULT = e ; :}
-        ;
 
-CSTE    ::=     CONSTANTEINT:e 
+        |
+                ACCESS:a
+                {:
+                    RESULT = a;
+                :};
+
+CSTE    ::=     CONSTANTEINT:e
                 {: RESULT = new ConstanteEntiere(e, eleft+1) ; :}
-        |       CONSTANTEBOOL:e 
+        |       CONSTANTEBOOL:e
                 {: RESULT = new ConstanteBool(e, eleft+1) ; :}
-        ;
+;

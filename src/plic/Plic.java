@@ -22,12 +22,12 @@ public class Plic {
             /*AnalyseurSyntaxique analyseur = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(fichier)));
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
             System.err.println("expression stockée dans l'arbre : " + arbre);
-            arbre.verifier();
-            System.out.println(arbre.toMIPS());
-            */
+            arbre.verifier();**/
+
             AnalyseurSyntaxique analyseur = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(fichier)));
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
 
+            //System.out.println(arbre.toMIPS());
             arbre.verifier();
 
             /*récupére le séparateur du système de fichier par défaut et l'échappe*/

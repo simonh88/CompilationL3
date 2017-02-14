@@ -1,0 +1,27 @@
+classe Test
+
+ecrire "Hello world\n";
+
+
+// Hello
+
+ecrire "b = 2\n";
+b = 2;
+ecrire "a = 10 + 8 * b \n";
+a = 10 + 8 * b ;
+
+ecrire "Valeur de a : \n";
+
+ecrire a;
+ecrire "\n";
+ecrire b;
+ecrire "\n";
+ecrire c;
+
+publique entier a, b, c;
+
+
+ecrire "\n";
+
+fin
+

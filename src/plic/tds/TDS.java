@@ -8,14 +8,14 @@ import java.util.Map;
  */
 public class TDS {
 
-    private TDS instance;
+    private static TDS instance;
     private HashMap<Entree, Symbol> hmap;
 
     private TDS(){
         this.hmap = new HashMap<>();
     }
 
-    public TDS getInstance(){
+    public static TDS getInstance(){
         if (instance==null){
             instance = new TDS();
         }
@@ -39,5 +39,11 @@ public class TDS {
         }
 
         return size;
+    }
+
+    public Symbol identifier(Entree e, int noligne){
+        Symbol s = hmap.get(e);
+        if (s == null); //TODO THROW NEW EXCEPT
+        return s;
     }
 }

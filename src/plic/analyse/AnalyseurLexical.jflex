@@ -16,6 +16,10 @@ import plic.exceptions.AnalyseLexicaleException;
         return symbol(CodesLexicaux.EOF) ;
 %eofval}
 
+// Gestion des commentaires
+
+%state commentaire
+
 %cup
 
 %{
@@ -28,52 +32,72 @@ import plic.exceptions.AnalyseLexicaleException;
   }
 %}
 
-
-idf   = [_a-zA-Z][_a-zA-Z0-9]{0,30}
-
 csteE = [0-9]+
 csteB = "vrai" | "faux"
-csteC = "\"" [_a-zA-Z][_a-zA-Z0-9]{0,80} "\""
 
 finDeLigne = \r|\n
 espace = {finDeLigne}  | [ \t\f]
 
+
+csteChaine = \"([^\"]|\"\")*\"
+
+commentaireSlashSlash = [/][/].*
+commentaireSlashEtoile = [/][*]
+commentaireEtoileSlash = [*][/]
+idf = [_a-zA-Z][_a-zA-Z0-9]{0,30}
+
 %%
 
-"+"                	{ return symbol(CodesLexicaux.PLUS); }
-"-"                	{ return symbol(CodesLexicaux.MOINS); }
-"*"                	{ return symbol(CodesLexicaux.MULT); }
-"/"                	{ return symbol(CodesLexicaux.DIV); }
+<YYINITIAL> "+"                	{ return symbol(CodesLexicaux.PLUS); }
+<YYINITIAL> "-"                	{ return symbol(CodesLexicaux.MOINS); }
+<YYINITIAL> "*"                	{ return symbol(CodesLexicaux.MULT); }
+<YYINITIAL> "/"                	{ return symbol(CodesLexicaux.DIV); }
 
-"=="                { return symbol(CodesLexicaux.EGALEGAL); }
-"!="                { return symbol(CodesLexicaux.DIFF); }
-"<"                	{ return symbol(CodesLexicaux.INF); }
-">"                	{ return symbol(CodesLexicaux.SUP); }
+<YYINITIAL> "=="                    { return symbol(CodesLexicaux.EGALEGAL); }
+<YYINITIAL> "!="                    { return symbol(CodesLexicaux.DIFF); }
+<YYINITIAL> "<"                	{ return symbol(CodesLexicaux.INF); }
+<YYINITIAL> ">"                	{ return symbol(CodesLexicaux.SUP); }
 
-"et"                { return symbol(CodesLexicaux.ET); }
-"ou"                { return symbol(CodesLexicaux.OU); }
-"non"               { return symbol(CodesLexicaux.NON); }
+<YYINITIAL> "et"                	{ return symbol(CodesLexicaux.ET); }
+<YYINITIAL> "ou"                	{ return symbol(CodesLexicaux.OU); }
+<YYINITIAL> "non"                	{ return symbol(CodesLexicaux.NON); }
 
-"("                	{ return symbol(CodesLexicaux.PAROUV); }
-")"                	{ return symbol(CodesLexicaux.PARFER); }
+<YYINITIAL> "("                	{ return symbol(CodesLexicaux.PAROUV); }
+<YYINITIAL> ")"                	{ return symbol(CodesLexicaux.PARFER); }
 
-","                	{ return symbol(CodesLexicaux.VIRGULE); }
-";"                	{ return symbol(CodesLexicaux.POINTVIRGULE); }
-"="                	{ return symbol(CodesLexicaux.EGAL); }
+<YYINITIAL> {csteE}      	        { return symbol(CodesLexicaux.CONSTANTEINT, yytext()); }
+<YYINITIAL> {csteB}      	        { return symbol(CodesLexicaux.CONSTANTEBOOL, yytext()); }
 
-"classe"            { return symbol(CodesLexicaux.INSTCLASSE); }
-"publique"          { return symbol(CodesLexicaux.PUBLIQUE); }
-"privee"            { return symbol(CodesLexicaux.PRIVEE); }
-"ecrire"            { return symbol(CodesLexicaux.INSTECRIRE); }
+<YYINITIAL> {espace}                { }
 
-"entier"            { return symbol(CodesLexicaux.ENTIER); }
 
-{csteE}      	    { return symbol(CodesLexicaux.CONSTANTEINT, yytext()); }
-{csteB}      	    { return symbol(CodesLexicaux.CONSTANTEBOOL, yytext()); }
-{csteC}      	    { return symbol(CodesLexicaux.CONSTANTECHAINE, yytext()); }
 
-{idf}      	        { return symbol(CodesLexicaux.IDF, yytext()); }
+// ------ Plic1 ------ //
 
-{espace}            { }
+<YYINITIAL> "classe"            { return symbol(CodesLexicaux.CLASSETERM ); }
+<YYINITIAL> "fin"            { return symbol(CodesLexicaux.FIN ); }
 
-.                   { throw new AnalyseLexicaleException(yyline, yycolumn, yytext()) ; }
+<YYINITIAL> "publique"          { return symbol(CodesLexicaux.PUBLIQUE); }
+<YYINITIAL> "privee"          { return symbol(CodesLexicaux.PRIVEE); }
+<YYINITIAL> "entier"          { return symbol(CodesLexicaux.ENTIER); }
+<YYINITIAL> {csteChaine}            {
+                                           String s = yytext();
+                                            s = s.replace("\"\"", "\\\"");
+                                           return symbol(CodesLexicaux.CONSTANTECHAINE, s); }
+<YYINITIAL> "ecrire"            { return symbol(CodesLexicaux.ECRIRETERM); }
+
+
+<YYINITIAL> {commentaireSlashSlash}         {}
+<YYINITIAL> {commentaireSlashEtoile}            {yybegin(commentaire);}
+<commentaire> {commentaireEtoileSlash}          {yybegin(YYINITIAL);}
+
+<YYINITIAL> {idf}           { return symbol(CodesLexicaux.IDFTERM, yytext()) ; }
+
+
+<YYINITIAL> ";"         { return symbol(CodesLexicaux.POINTVIRGULE); }
+<YYINITIAL> ","         { return symbol(CodesLexicaux.VIRGULE); }
+<YYINITIAL> "="         { return symbol(CodesLexicaux.EGAL); }
+
+.                       {}
+\n        {}
+" " {}

@@ -797,7 +797,7 @@ public class AnalyseurLexical implements java_cup.runtime.Scanner {
             }
           case 28: break;
           case 2: 
-            { return symbol(CodesLexicaux.IDF, yytext());
+            { return symbol(CodesLexicaux.IDFTERM, yytext());
             }
           case 29: break;
           case 3: 
@@ -885,11 +885,11 @@ public class AnalyseurLexical implements java_cup.runtime.Scanner {
             }
           case 50: break;
           case 24: 
-            { return symbol(CodesLexicaux.INSTECRIRE);
+            { return symbol(CodesLexicaux.ECRIRETERM);
             }
           case 51: break;
           case 25: 
-            { return symbol(CodesLexicaux.CLASSE);
+            { return symbol(CodesLexicaux.CLASSETERM);
             }
           case 52: break;
           case 26: 
