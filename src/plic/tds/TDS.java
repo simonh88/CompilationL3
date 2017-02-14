@@ -23,6 +23,7 @@ public class TDS {
     }
 
     public void ajouter(Entree entree, Symbol symbol){
+        //TODO THROW DOUBLEDECLARATION
         //if(this.hmap.has(entree)) throws DoubleDeclaration ...
 
         this.hmap.put(entree, symbol);

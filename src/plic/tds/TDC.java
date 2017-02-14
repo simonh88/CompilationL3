@@ -26,24 +26,28 @@ public class TDC {
     }
 
     public void ajouter(String chaine) {
-        String label = "label_str_" + Integer.toString(compteur);
-        compteur++;
-
         // Si la chaine n'est pas dans la table, on l'ajoute
         if (!chaineLabel.containsKey(chaine)) {
+            String label = "label_str_" + Integer.toString(compteur);
+            compteur++;
             chaineLabel.put(chaine, label);
         }
     }
 
-    public String getLabelFromString(String str) {
-        return chaineLabel.get(str);
+    public String getLabelFromString(String s) {
+        return chaineLabel.get(s);
     }
 
     public String generateMIPS() {
         StringBuilder sb = new StringBuilder();
+
         for (String s : chaineLabel.keySet()) {
-            sb.append(String.format("%s:\t.asciiz %s\n", chaineLabel.get(s), s));
+            sb.append(chaineLabel.get(s));
+            sb.append("\n.asciiz ");
+            sb.append(s);
+            sb.append("\n\n");
         }
+
         return sb.toString();
     }
 }

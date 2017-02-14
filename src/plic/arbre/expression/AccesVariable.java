@@ -5,7 +5,7 @@ import plic.tds.Idf;
 /**
  * Created by simon on 14/02/17.
  */
-public class AccesVariable extends Expression{
+public class AccesVariable extends Expression {
 
 
     private Idf idf;
@@ -16,17 +16,21 @@ public class AccesVariable extends Expression{
     }
 
     public String toString() {
-        return "" + this.idf;
+        return this.idf.toString();
     }
 
     public void verifier() {
-        idf.verifier();
+        this.idf.verifier();
     }
 
     public String toMIPS() {
         StringBuilder sb = new StringBuilder();
-        int dep = idf.getDeplacement();
-        sb.append(String.format("\tlw $v0, %d($s7)\n", dep));
+        int deplacement = this.idf.getDeplacement();
+
+        sb.append("\nlw $v0, ");
+        sb.append(deplacement);
+        sb.append("($s7)\n\n");
+
         return sb.toString();
     }
 

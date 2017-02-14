@@ -15,7 +15,15 @@ public class EcrireExpression extends Ecrire{
     }
 
     public String toMIPS() {
-        return "";
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(e.toMIPS());
+        sb.append("\nmove $a0, $v0\n");
+        sb.append("\nli $v0, 1\n");
+        sb.append("\nsyscall\n\n");
+
+        return sb.toString();
     }
 
     public void verifier() {

@@ -17,7 +17,14 @@ public class Affectation extends Instruction {
     }
 
     public String toMIPS() {
-        return "toMips";
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(e.toMIPS());
+        sb.append("\n sw $v0, ");
+        sb.append(idf.getDeplacement());
+        sb.append("($s7)\n\n");
+
+        return sb.toString();
     }
 
     public void verifier() {

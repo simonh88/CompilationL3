@@ -17,14 +17,14 @@ public class Symbol {
     }
 
     public String getStatut() {
-        return statut;
+        return this.statut;
     }
 
     public String getType() {
-        return type;
+        return this.type;
     }
 
     public int getDeplacement() {
-        return deplacement;
+        return this.deplacement;
     }
 }
