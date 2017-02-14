@@ -2,9 +2,9 @@ package plic.analyse ;
 
 import java.util.*;
 import plic.arbre.* ;
-import plic.arbre.expression.* ;
-import plic.declarations.* ;
+mport plic.declarations.* ;
 import plic.exceptions.AnalyseSyntaxiqueException;
+import plic.arbre.expression.* ;
 import plic.tds.*;
 import plic.tds.Symbol;
 
@@ -14,7 +14,6 @@ action code {:
              :} ;
 
 parser code {:
-
     public void report_error(String message, Object info) {
 
         HashMap<Integer, String> lesTerminaux = new HashMap<>() ;
@@ -38,7 +37,6 @@ parser code {:
         lesTerminaux.put(new Integer(CodesLexicaux.ENTIER), "entier") ;
 
         StringBuffer m = new StringBuffer() ;
-
         if (info instanceof java_cup.runtime.Symbol) {
             java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
 
@@ -59,7 +57,6 @@ parser code {:
             else {
                 m.append(" expression non terminee : " + s.sym) ;
             }
-
         }
         throw new AnalyseSyntaxiqueException("" + m) ;
     }
@@ -77,37 +74,32 @@ terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER ;
 terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON ;
 terminal String    CONSTANTEINT, CONSTANTEBOOL ;
 
-/*
-  Le mot clé classe est nommé CLASSETERM pour ne pas entrer en conflit avec
-  avec la règle nommé CLASSE
-*/
 
 terminal Symbol    ECRIRETERM, POINTVIRGULE, VIRGULE, CLASSETERM, FIN, PUBLIQUE ;
 terminal Symbol    PRIVEE, ENTIER, EGAL ;
 terminal String    IDFTERM, CONSTANTECHAINE ;
 
 /* Non terminals used in the grammar section.  */
-
 non terminal ArbreAbstrait SYSTEME ;
-non terminal Classe CLASSE ;
 non terminal Declaration DECLARATION ;
 non terminal DeclarationConstante DECL_CSTE;
+non terminal Classe CLASSE ;
 non terminal Declaration DECL_CHAMP ;
 non terminal Expression EXPR, CSTE ;
 non terminal String STATUS ;
 non terminal Affectation AFFECT ;
 non terminal AccesVariable ACCESS ;
+non terminal Idf IDF;
+non terminal ArrayList<Idf> IDFS;
 non terminal Ecrire ECRIRE ;
 non terminal Instruction INSTRUCTION ;
 non terminal BlocDeDeclarations DECLARATIONS ;
-non terminal Idf IDF;
-non terminal ArrayList<Idf> IDFS;
 non terminal String TYPE;
 
 precedence left INF, SUP ;
 precedence left EGALEGAL, DIFF;
-precedence left PLUS, MOINS;
 precedence left MULT, DIV ;
+precedence left PLUS, MOINS;
 precedence left OU ;
 precedence left ET ;
 precedence left NON ;
@@ -128,22 +120,21 @@ CLASSE ::= CLASSETERM IDF:i DECLARATIONS:ds FIN
            :}
            ;
 
-DECLARATIONS ::= DECLARATIONS:ds DECLARATION:d
+DECLARATIONS ::= DECLARATIONS:dec DECLARATION:d
             {:
                 if (d != null) {
-                    ds.ajouter(d);
+                    dec.ajouter(d);
                 }
 
-                RESULT = ds;
+                RESULT = dec;
             :}
             | DECLARATION:d
             {:
                 BlocDeDeclarations ds = new BlocDeDeclarations(dleft+1);
                 if (d != null) {
-                    ds.ajouter(d);
+                    dec.ajouter(d);
                 }
-
-                RESULT = ds;
+                RESULT = dec;
             :}
             ;
 
@@ -159,7 +150,6 @@ DECLARATION ::= DECL_CHAMP:d
 
 DECL_CHAMP ::= STATUS:s TYPE:t IDFS:i POINTVIRGULE
                {:
-                    // Ici, i est une arrayList de String
                     for (Idf champ : i) {
                         TDS.getInstance().ajouter(new Entree(champ.getNom()), new Symbol(s, t));
                     }
