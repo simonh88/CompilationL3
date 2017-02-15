@@ -35,7 +35,7 @@ public class AccesVariable extends Expression {
     }
 
     @Override
-    protected String type() {
+    public String type() {
         return idf.getSymbole().getType();
     }
 }

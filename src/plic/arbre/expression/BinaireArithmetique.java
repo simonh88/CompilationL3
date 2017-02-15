@@ -22,7 +22,7 @@ public abstract class BinaireArithmetique extends Binaire {
     	}
     }
     
-    protected String type(){
+    public String type(){
     	return "entier";
     }
 

@@ -1,6 +1,7 @@
 package plic.declarations;
 
 import plic.arbre.expression.Expression;
+import plic.exceptions.AnalyseSemantiqueException;
 import plic.tds.Idf;
 
 /**
@@ -28,6 +29,10 @@ public class Affectation extends Instruction {
     }
 
     public void verifier() {
+    	if(!idf.getSymbole().getType().equals(e.type())){
+    		throw new AnalyseSemantiqueException("Impossible d'affecter une expression "+e.type()+" dans une variable de type "+idf.getSymbole().getType());
+    	}
+    	
     }
 
     public String toString() {

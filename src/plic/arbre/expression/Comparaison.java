@@ -22,7 +22,7 @@ public abstract class Comparaison extends Binaire {
     	}
     }
     
-    protected String type(){
+    public String type(){
     	return "booleen";
     }
 

@@ -28,7 +28,7 @@ public class MoinsUnaire extends Unaire {
     }
 
 	@Override
-	protected String type() {
+	public String type() {
 		// TODO Auto-generated method stub
 		return "entier";
 	}

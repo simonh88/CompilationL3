@@ -29,7 +29,7 @@ public class EcrireChaine extends Ecrire {
     }
 
     public void verifier() {
-
+    	
     }
 
     public String toString() {
