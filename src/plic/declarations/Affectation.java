@@ -29,6 +29,7 @@ public class Affectation extends Instruction {
     }
 
     public void verifier() {
+    	e.verifier();
     	if(!idf.getSymbole().getType().equals(e.type())){
     		throw new AnalyseSemantiqueException("Impossible d'affecter une expression "+e.type()+" dans une variable de type "+idf.getSymbole().getType());
     	}
