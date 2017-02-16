@@ -2,7 +2,7 @@ package plic.analyse ;
 
 import java.util.*;
 import plic.arbre.* ;
-mport plic.declarations.* ;
+import plic.declarations.* ;
 import plic.exceptions.AnalyseSyntaxiqueException;
 import plic.arbre.expression.* ;
 import plic.tds.*;
@@ -132,9 +132,9 @@ DECLARATIONS ::= DECLARATIONS:dec DECLARATION:d
             {:
                 BlocDeDeclarations ds = new BlocDeDeclarations(dleft+1);
                 if (d != null) {
-                    dec.ajouter(d);
+                    ds.ajouter(d);
                 }
-                RESULT = dec;
+                RESULT = ds;
             :}
             ;
 

@@ -27,4 +27,8 @@ public class Symbol {
     public int getDeplacement() {
         return this.deplacement;
     }
+
+    public String toString(){
+        return statut + " - "+ type + " - " + deplacement;
+    }
 }

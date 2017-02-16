@@ -29,10 +29,6 @@ public class EcrireExpression extends Ecrire{
 
     public void verifier() {
     	e.verifier();
-    	if(!e.type().equals("entier")){
-    		throw new AnalyseSemantiqueException("ERREUR SEMANTIQUE: Impossible d'ecrire autre chose qu'un entier");
-    	}
-    	
     }
 
     public String toString() {

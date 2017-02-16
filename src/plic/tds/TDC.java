@@ -43,7 +43,7 @@ public class TDC {
 
         for (String s : chaineLabel.keySet()) {
             sb.append(chaineLabel.get(s));
-            sb.append("\n.asciiz ");
+            sb.append(":\n.asciiz ");
             sb.append(s);
             sb.append("\n\n");
         }

@@ -29,14 +29,19 @@ public class Affectation extends Instruction {
     }
 
     public void verifier() {
-    	e.verifier();
-    	if(!idf.getSymbole().getType().equals(e.type())){
-    		throw new AnalyseSemantiqueException("Impossible d'affecter une expression "+e.type()+" dans une variable de type "+idf.getSymbole().getType());
-    	}
-    	
+        System.out.println(toString());
+        e.verifier();
+    	idf.verifier();
     }
 
     public String toString() {
-        return "affectation";
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(idf);
+        sb.append(" = ");
+        sb.append(e);
+        sb.append("\n");
+
+        return sb.toString();
     }
 }

@@ -19,7 +19,7 @@ public class EcrireChaine extends Ecrire {
     public String toMIPS() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("\n li $v0, 4\n");
+        sb.append("\nli $v0, 4\n");
         sb.append("la $a0, ");
         sb.append(TDC.getInstance().getLabelFromString(this.texte));
         sb.append("\nsyscall\n\n");

@@ -72,6 +72,8 @@ public class Classe extends ArbreAbstrait {
     }
 
     public void verifier() {
+
+        TDS.getInstance().toString();
         declarations.verifier();
     }
 

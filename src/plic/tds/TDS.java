@@ -1,5 +1,6 @@
 package plic.tds;
 
+import plic.exceptions.VariableNonDeclareeException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,8 +44,25 @@ public class TDS {
     }
 
     public Symbol identifier(Entree e, int noligne){
+
         Symbol s = hmap.get(e);
-        if (s == null); //TODO THROW NEW EXCEPT
+        if (s == null) throw new VariableNonDeclareeException(e.toString(), noligne);
         return s;
+    }
+
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+
+        for(Map.Entry<Entree, Symbol> entry : this.hmap.entrySet()) {
+            Entree e = entry.getKey();
+            Symbol s = entry.getValue();
+
+            sb.append("Entree : ");
+            sb.append(e.toString());
+            sb.append(" - Symbol : ");
+            sb.append(s.toString());
+        }
+
+        return sb.toString();
     }
 }

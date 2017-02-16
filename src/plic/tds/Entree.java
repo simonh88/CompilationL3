@@ -14,4 +14,8 @@ public class Entree {
     public String getNom() {
         return nom;
     }
+
+    public String toString(){
+        return nom;
+    }
 }
