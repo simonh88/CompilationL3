@@ -1,0 +1,54 @@
+.data
+str_div_by_0:	.asciiz "Exception : Division par zero interdite" 
+label_str_1:
+.asciiz "b = 2\n"
+
+label_str_0:
+.asciiz "Hello world\n"
+
+label_str_2:
+.asciiz "\n"
+
+.text
+main :
+move $s7,$sp
+addi $sp, $sp, -4
+
+
+
+
+li $v0, 4
+la $a0, label_str_0
+syscall
+
+
+
+
+li $v0, 4
+la $a0, label_str_1
+syscall
+
+
+
+li $v0, 2
+
+ sw $v0, 0($s7)
+
+
+
+
+li $v0, 4
+la $a0, label_str_2
+syscall
+
+end :
+move $v1, $v0
+li $v0, 10
+syscall
+
+print_exception_div_zero:
+li $v0, 4
+la $a0, str_div_by_0
+syscall
+b end
+
