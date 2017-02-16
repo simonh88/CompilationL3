@@ -152,6 +152,7 @@ DECL_CHAMP ::= STATUS:s TYPE:t IDFS:i POINTVIRGULE
                {:
                     for (Idf champ : i) {
                         TDS.getInstance().ajouter(new Entree(champ.getNom()), new Symbol(s, t));
+                        System.out.println("Entree "+champ.getNom()+" ajoutee !");
                     }
                :}
                ;

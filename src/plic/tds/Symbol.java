@@ -10,10 +10,10 @@ public class Symbol {
     private String type;
     private int deplacement;
 
-    public Symbol(String statut, String type){
+    public Symbol(String statut, String type) {
         this.statut = statut;
         this.type = type;
-        this.deplacement = TDS.getInstance().getTailleZoneDesVariables();;
+        this.deplacement = TDS.getInstance().getTailleZoneDesVariables();
     }
 
     public String getStatut() {
@@ -28,7 +28,7 @@ public class Symbol {
         return this.deplacement;
     }
 
-    public String toString(){
-        return statut + " - "+ type + " - " + deplacement;
+    public String toString() {
+        return statut + " - " + type + " - " + deplacement;
     }
 }
