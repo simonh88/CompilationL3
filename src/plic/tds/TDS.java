@@ -47,19 +47,6 @@ public class TDS {
     }
 
     public Symbol identifier(Entree e, int noligne) {
-
-        /*System.out.println(toString());
-        System.out.println(hmap.size());
-        System.out.println("e : "+e.toString());
-        System.out.println("hmap contient b ? : "+hmap.containsValue(e));
-        System.out.println("HMAP CONTIENT : ");
-        for(Map.Entry<Entree, Symbol> entry : hmap.entrySet()) {
-            Entree key = entry.getKey();
-            Symbol value = entry.getValue();
-            System.out.println(" key : "+key+" value : "+value);
-
-        }*/
-
         if (hmap.get(e) == null) throw new VariableNonDeclareeException(e.toString(), noligne);
         return hmap.get(e);
     }

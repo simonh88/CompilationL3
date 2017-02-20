@@ -29,7 +29,6 @@ public class Affectation extends Instruction {
     }
 
     public void verifier() {
-        System.out.println(toString());
         e.verifier();
     	idf.verifier();
     }

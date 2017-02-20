@@ -22,7 +22,7 @@ public class Plic {
             /*AnalyseurSyntaxique analyseur = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(fichier)));
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
             System.err.println("expression stockée dans l'arbre : " + arbre);
-            arbre.verifier();**/
+            arbre.verifier();***/
 
             AnalyseurSyntaxique analyseur = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(fichier)));
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
@@ -40,6 +40,7 @@ public class Plic {
             BufferedWriter outputWriter = new BufferedWriter(new FileWriter(file));
             outputWriter.write(arbre.toMIPS());
             outputWriter.close();
+            System.out.println("COMPILATION OK");
 
         } 
         catch (FileNotFoundException ex) {
