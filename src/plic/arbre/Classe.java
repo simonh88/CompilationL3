@@ -36,7 +36,7 @@ public class Classe extends ArbreAbstrait {
         StringBuilder sb = new StringBuilder();
 
         sb.append(".data\n");
-        sb.append("str_div_by_0:\t.asciiz \"Exception : Division par zero interdite\" \n");
+        sb.append("str_div_by_0:\t.asciiz \"ERREUR D'EXECUTION : Division par zero interdite\" \n");
         sb.append(TDC.getInstance().generateMIPS());
         sb.append(".text\n");
         sb.append("main :\n");

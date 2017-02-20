@@ -18,7 +18,7 @@ public abstract class BinaireLogique extends Binaire {
     	String gaucheType = gauche.type();
     	String droiteType = droite.type();
     	if(!droiteType.equals("booleen") || !gaucheType.equals("booleen")){
-    		throw new AnalyseSemantiqueException("L'une des deux operandes logiques n'est pas un booleen");
+    		throw new AnalyseSemantiqueException(" Line : "+this.getNoLigne() +"\n\t\t\t\t\tL'une des deux operandes logiques n'est pas un booleen");
     	}
     }
     

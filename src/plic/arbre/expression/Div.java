@@ -23,7 +23,7 @@ public class Div extends BinaireArithmetique {
     public void verifier(){
     	super.verifier();
     	if(droite.toString().equals("0")){
-    		throw new AnalyseExecutionException("Division par 0 interdite");
+    		throw new AnalyseExecutionException(" Line : "+this.getNoLigne() +"\n\t\t\t\t\tDivision par 0 interdite");
     	}
     }
 

@@ -23,7 +23,7 @@ public class MoinsUnaire extends Unaire {
     public void verifier() {
     	String type = expression.type();
     	if(!type.equals("entier")){
-    		throw new AnalyseSemantiqueException("L'expression n'est pas une expression entiere");
+    		throw new AnalyseSemantiqueException(" Line : "+this.getNoLigne() +"\n\t\t\t\t\tL'expression n'est pas une expression entiere");
     	}
     }
 

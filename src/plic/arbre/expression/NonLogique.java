@@ -23,7 +23,7 @@ public class NonLogique extends Unaire {
     public void verifier() {
     	String type = expression.type();
     	if(!type.equals("booleen")){
-    		throw new AnalyseSemantiqueException("L'expression n'est pas une expression booleenne");
+    		throw new AnalyseSemantiqueException(" Line : "+this.getNoLigne() +"\n\t\t\t\t\tL'expression n'est pas une expression booleenne");
     	}
     }
 

@@ -1,5 +1,6 @@
 package plic.tds;
 
+import plic.exceptions.DoubleDeclarationException;
 import plic.exceptions.VariableNonDeclareeException;
 
 import java.util.HashMap;
@@ -26,7 +27,7 @@ public class TDS {
 
     public void ajouter(Entree entree, Symbol symbol) {
         //TODO THROW DOUBLEDECLARATION
-        //if(this.hmap.has(entree)) throws DoubleDeclaration ...
+        if(this.hmap.containsKey(entree)) throw new DoubleDeclarationException("Multiple déclarations de la variable : "+entree.toString());
 
         this.hmap.put(entree, symbol);
     }
@@ -43,6 +44,7 @@ public class TDS {
 
         return size;*/
 
+        //TODO MODIF QUAND ON IMPLEMENTERA LES AUTRES TYPES
         return -(hmap.size() * 4);
     }
 

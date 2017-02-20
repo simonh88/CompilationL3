@@ -9,6 +9,7 @@ ecrire "b = 2\n";
 
 publique entier b;
 publique entier a;
+publique entier a;
 
 
 b = 2;
@@ -24,7 +25,7 @@ ecrire faux;
 
 ecrire "\n";
 
-ecrire 5/0;
+ecrire 5/(2-2);
 
 ecrire 3*b+1;
 

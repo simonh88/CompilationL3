@@ -18,7 +18,7 @@ public abstract class BinaireArithmetique extends Binaire {
     	String gaucheType = gauche.type();
     	String droiteType = droite.type();
     	if(!droiteType.equals("entier") || !gaucheType.equals("entier")){
-    		throw new AnalyseSemantiqueException("L'une des deux operandes arithmetiques n'est pas un entier");
+    		throw new AnalyseSemantiqueException(" Line : "+this.getNoLigne() +"\n\t\t\t\t\tL'une des deux operandes arithmetiques n'est pas un entier");
     	}
     }
     
