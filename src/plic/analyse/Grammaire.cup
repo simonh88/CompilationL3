@@ -217,11 +217,11 @@ INSTRUCTIONS ::= INSTRUCTIONS:inst INSTRUCTION:i
                 inst.ajouter(i);
                 RESULT = inst;
             :}
-            | DECLARATION:d
+            | INSTRUCTION:i
             {:
                 BlocDinstructions di = new BlocDinstructions(dleft+1);
                 if (di != null) {
-                    di.ajouter(d);
+                    di.ajouter(i);
                 }
                 RESULT = di;
             :}
