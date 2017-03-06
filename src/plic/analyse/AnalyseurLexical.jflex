@@ -51,6 +51,15 @@ idf = [_a-zA-Z][_a-zA-Z0-9]{0,30}
 %%
 
 
+
+// ------ Plic2 ------ //
+
+<YYINITIAL> "si" { return symbol(CodesLexicaux.SI ); }
+<YYINITIAL> "alors" { return symbol(CodesLexicaux.ALORS ); }
+<YYINITIAL> "sinon" { return symbol(CodesLexicaux.SINON ); }
+<YYINITIAL> "fsi" { return symbol(CodesLexicaux.FSI ); }
+
+
 <YYINITIAL> "==" { return symbol(CodesLexicaux.EGALEGAL); }
 <YYINITIAL> "!=" { return symbol(CodesLexicaux.DIFF); }
 <YYINITIAL> "<" { return symbol(CodesLexicaux.INF); }

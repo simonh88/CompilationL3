@@ -79,6 +79,8 @@ terminal Symbol    ECRIRETERM, POINTVIRGULE, VIRGULE, CLASSETERM, FIN, PUBLIQUE 
 terminal Symbol    PRIVEE, ENTIER, EGAL ;
 terminal String    IDFTERM, CONSTANTECHAINE ;
 
+terminal Symbol    SI, SINON, ALORS, FSI ;
+
 /* Non terminals used in the grammar section.  */
 non terminal ArbreAbstrait SYSTEME ;
 non terminal Declaration DECLARATION ;
@@ -94,7 +96,9 @@ non terminal ArrayList<Idf> IDFS;
 non terminal Ecrire ECRIRE ;
 non terminal Instruction INSTRUCTION ;
 non terminal BlocDeDeclarations DECLARATIONS ;
-non terminal String TYPE;
+non terminal BlocDinstructions INSTRUCTIONS ;
+non terminal Condition CONDITION ;
+non terminal String TYPE ;
 
 precedence left PLUS, MOINS;
 precedence left OU ;
@@ -206,7 +210,22 @@ INSTRUCTION ::= AFFECT:a
             {:
                 RESULT = e;
             :}
-            ;
+;
+
+INSTRUCTIONS ::= INSTRUCTIONS:inst INSTRUCTION:i
+            {:
+                inst.ajouter(i);
+                RESULT = inst;
+            :}
+            | DECLARATION:d
+            {:
+                BlocDinstructions di = new BlocDinstructions(dleft+1);
+                if (di != null) {
+                    di.ajouter(d);
+                }
+                RESULT = di;
+            :}
+;
 
 AFFECT ::= IDF:i EGAL EXPR:e POINTVIRGULE
         {:
@@ -284,4 +303,15 @@ CSTE    ::=     CONSTANTEINT:e
                 {: RESULT = new ConstanteEntiere(e, eleft+1) ; :}
         |       CONSTANTEBOOL:e
                 {: RESULT = new ConstanteBool(e, eleft+1) ; :}
+;
+
+CONDITION   ::= SI EXPR:e ALORS INSTRUCTIONS:i FSI
+                {:
+                    RESULT = new Condition(eleft+1, e, i);
+                :}
+            |
+                SI EXPR:e ALORS INSTRUCTIONS:si SINON INSTRUCTIONS:sinon FSI
+                {:
+                    RESULT = new Condition(eleft+1, e, si, sinon);
+                :}
 ;
