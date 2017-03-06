@@ -54,7 +54,7 @@ public class Condition extends DeclarationConstante {
         strb.append("beq $v0, $0, sinon"+noLigne+"\n");
         //Bloc du si
         strb.append(blocSi.toMIPS());
-        strb.append("j fsi"+noLigne);//On va a la fin
+        strb.append("j fsi"+noLigne+"\n");//On va a la fin
         //Bloc du sinon
         strb.append("sinon"+noLigne+": \n");
         if(blocSinon != null) strb.append(blocSinon.toMIPS());
