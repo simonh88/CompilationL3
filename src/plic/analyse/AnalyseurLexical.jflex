@@ -51,15 +51,6 @@ idf = [_a-zA-Z][_a-zA-Z0-9]{0,30}
 %%
 
 
-
-// ------ Plic2 ------ //
-
-<YYINITIAL> "si" { return symbol(CodesLexicaux.SI ); }
-<YYINITIAL> "alors" { return symbol(CodesLexicaux.ALORS ); }
-<YYINITIAL> "sinon" { return symbol(CodesLexicaux.SINON ); }
-<YYINITIAL> "fsi" { return symbol(CodesLexicaux.FSI ); }
-
-
 <YYINITIAL> "==" { return symbol(CodesLexicaux.EGALEGAL); }
 <YYINITIAL> "!=" { return symbol(CodesLexicaux.DIFF); }
 <YYINITIAL> "<" { return symbol(CodesLexicaux.INF); }
@@ -103,12 +94,23 @@ idf = [_a-zA-Z][_a-zA-Z0-9]{0,30}
 <YYINITIAL> {commSlashEtoile} {yybegin(commentaire);}
 <commentaire> {commEtoileSlash} {yybegin(YYINITIAL);}
 
-<YYINITIAL> {idf} { return symbol(CodesLexicaux.IDFTERM, yytext()) ; }
-
 
 <YYINITIAL> ";" { return symbol(CodesLexicaux.POINTVIRGULE); }
 <YYINITIAL> "," { return symbol(CodesLexicaux.VIRGULE); }
 <YYINITIAL> "=" { return symbol(CodesLexicaux.EGAL); }
+
+
+
+// ------ Plic2 ------ //
+
+<YYINITIAL> "si" { return symbol(CodesLexicaux.SI ); }
+<YYINITIAL> "sinon" { return symbol(CodesLexicaux.SINON ); }
+<YYINITIAL> "alors" { return symbol(CodesLexicaux.ALORS ); }
+<YYINITIAL> "fsi" { return symbol(CodesLexicaux.FSI ); }
+
+
+
+<YYINITIAL> {idf} { return symbol(CodesLexicaux.IDFTERM, yytext()) ; }
 
 . {}
 \n {}

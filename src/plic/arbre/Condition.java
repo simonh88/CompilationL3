@@ -1,11 +1,12 @@
 package plic.arbre;
 
 import plic.arbre.expression.Expression;
+import plic.declarations.DeclarationConstante;
 
 /**
  * Created by simon on 06/03/17.
  */
-public class Condition extends ArbreAbstrait {
+public class Condition extends DeclarationConstante {
 
 
     private Expression condition;

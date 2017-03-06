@@ -70,16 +70,18 @@ parser code {:
 
 /* Terminals (tokens returned by the scanner).  */
 
+
+
 terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER ;
 terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON ;
+
+terminal Symbol    SI, SINON, ALORS, FSI ;
 terminal String    CONSTANTEINT, CONSTANTEBOOL ;
 
 
 terminal Symbol    ECRIRETERM, POINTVIRGULE, VIRGULE, CLASSETERM, FIN, PUBLIQUE ;
 terminal Symbol    PRIVEE, ENTIER, EGAL ;
 terminal String    IDFTERM, CONSTANTECHAINE ;
-
-terminal Symbol    SI, SINON, ALORS, FSI ;
 
 /* Non terminals used in the grammar section.  */
 non terminal ArbreAbstrait SYSTEME ;
@@ -96,9 +98,9 @@ non terminal ArrayList<Idf> IDFS;
 non terminal Ecrire ECRIRE ;
 non terminal Instruction INSTRUCTION ;
 non terminal BlocDeDeclarations DECLARATIONS ;
-non terminal BlocDinstructions INSTRUCTIONS ;
-non terminal Condition CONDITION ;
 non terminal String TYPE ;
+non terminal Condition CONDITION ;
+non terminal BlocDinstructions INSTRUCTIONS ;
 
 precedence left PLUS, MOINS;
 precedence left OU ;
@@ -152,6 +154,7 @@ DECLARATION ::= DECL_CHAMP:d
                 :}
                 ;
 
+
 DECL_CHAMP ::= STATUS:s TYPE:t IDFS:i POINTVIRGULE
                {:
                     for (Idf champ : i) {
@@ -200,6 +203,10 @@ DECL_CSTE ::= INSTRUCTION:i
            {:
                 RESULT = i;
            :}
+            | CONDITION:c
+            {:
+                RESULT = c;
+            :}
            ;
 
 INSTRUCTION ::= AFFECT:a
@@ -226,6 +233,20 @@ INSTRUCTIONS ::= INSTRUCTIONS:inst INSTRUCTION:i
                 RESULT = di;
             :}
 ;
+
+CONDITION   ::= SI EXPR:e ALORS INSTRUCTIONS:i FSI
+                {:
+                    System.out.println("SI");
+                    RESULT = new Condition(eleft+1, e, i);
+                :}
+            |
+                SI EXPR:e ALORS INSTRUCTIONS:si SINON INSTRUCTIONS:sinon FSI
+                {:
+                    System.out.println("SI");
+                    RESULT = new Condition(eleft+1, e, si, sinon);
+                :}
+;
+
 
 AFFECT ::= IDF:i EGAL EXPR:e POINTVIRGULE
         {:
@@ -303,15 +324,4 @@ CSTE    ::=     CONSTANTEINT:e
                 {: RESULT = new ConstanteEntiere(e, eleft+1) ; :}
         |       CONSTANTEBOOL:e
                 {: RESULT = new ConstanteBool(e, eleft+1) ; :}
-;
-
-CONDITION   ::= SI EXPR:e ALORS INSTRUCTIONS:i FSI
-                {:
-                    RESULT = new Condition(eleft+1, e, i);
-                :}
-            |
-                SI EXPR:e ALORS INSTRUCTIONS:si SINON INSTRUCTIONS:sinon FSI
-                {:
-                    RESULT = new Condition(eleft+1, e, si, sinon);
-                :}
 ;

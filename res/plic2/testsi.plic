@@ -1,8 +1,17 @@
 classe Test
 
 ecrire "Hello world\n";
+ecrire 0==0;
 
-si 0==0 alors
+publique entier a;
+publique entier b;
+
+a = 0;
+b = 0;
+
+ecrire a>b;
+
+si 7==7 alors
     ecrire "Dans si\n";
 sinon
     ecrire "Dans sinon\n";
