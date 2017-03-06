@@ -13,7 +13,7 @@ public class BlocDinstructions extends ArbreAbstrait{
 
     protected ArrayList<Instruction> instructions;
 
-    protected BlocDinstructions(int no) {
+    public BlocDinstructions(int no) {
         super(no);
         instructions = new ArrayList<Instruction>();
     }

@@ -18,7 +18,7 @@ public class Condition extends ArbreAbstrait {
      * @param e
      * @param bdsi
      */
-    protected Condition(int no, Expression e, BlocDinstructions bdsi) {
+    public Condition(int no, Expression e, BlocDinstructions bdsi) {
         super(no);
         condition = e;
         blocSi = bdsi;
@@ -32,7 +32,7 @@ public class Condition extends ArbreAbstrait {
      * @param bdsi
      * @param bdsinon
      */
-    protected Condition(int no, Expression e, BlocDinstructions bdsi, BlocDinstructions bdsinon) {
+    public Condition(int no, Expression e, BlocDinstructions bdsi, BlocDinstructions bdsinon) {
         super(no);
         condition = e;
         blocSi = bdsi;
