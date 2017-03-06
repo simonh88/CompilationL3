@@ -76,6 +76,7 @@ terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER ;
 terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON ;
 
 terminal Symbol    SI, SINON, ALORS, FSI ;
+terminal Symbol	   TANTQUE, FTANT, REPETER;
 terminal String    CONSTANTEINT, CONSTANTEBOOL ;
 
 
@@ -100,6 +101,7 @@ non terminal Instruction INSTRUCTION ;
 non terminal BlocDeDeclarations DECLARATIONS ;
 non terminal String TYPE ;
 non terminal Condition CONDITION ;
+non terminal Boucle BOUCLE ;
 non terminal BlocDinstructions INSTRUCTIONS ;
 
 precedence left PLUS, MOINS;
@@ -207,6 +209,11 @@ DECL_CSTE ::= INSTRUCTION:i
             {:
                 RESULT = c;
             :}
+            | 
+              BOUCLE:b
+            {:
+            	RESULT = b; 
+            :}
            ;
 
 INSTRUCTION ::= AFFECT:a
@@ -245,6 +252,11 @@ CONDITION   ::= SI EXPR:e ALORS INSTRUCTIONS:i FSI
                 :}
 ;
 
+BOUCLE 		::= TANTQUE EXPR:e REPETER INSTRUCTIONS:i FTANT
+				{:
+					RESULT = new TantQue(eleft+1,e,i);
+				:}
+;
 
 AFFECT ::= IDF:i EGAL EXPR:e POINTVIRGULE
         {:
