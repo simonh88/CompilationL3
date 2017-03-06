@@ -26,7 +26,6 @@ public class TDS {
     }
 
     public void ajouter(Entree entree, Symbol symbol) {
-        //TODO THROW DOUBLEDECLARATION
         if(this.hmap.containsKey(entree)) throw new DoubleDeclarationException("Multiple déclarations de la variable : "+entree.toString());
 
         this.hmap.put(entree, symbol);
