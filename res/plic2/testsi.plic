@@ -2,7 +2,7 @@ classe Test
 
 ecrire "Hello world\n";
 
-si (0==0) alors
+si 0==0 alors
     ecrire "Dans si\n";
 sinon
     ecrire "Dans sinon\n";

@@ -219,7 +219,7 @@ INSTRUCTIONS ::= INSTRUCTIONS:inst INSTRUCTION:i
             :}
             | INSTRUCTION:i
             {:
-                BlocDinstructions di = new BlocDinstructions(dleft+1);
+                BlocDinstructions di = new BlocDinstructions(ileft+1);
                 if (di != null) {
                     di.ajouter(i);
                 }
