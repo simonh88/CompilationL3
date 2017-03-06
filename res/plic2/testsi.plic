@@ -1,8 +1,18 @@
 classe Test
 
 ecrire "Hello world\n";
+ecrire 0==0;
 
 
+publique entier a;
+publique entier b;
+
+a = 0;
+b = 0;
+
+ecrire a>b;
+
+si 7==7 alors
     ecrire "Dans si\n";
 fsi
 
