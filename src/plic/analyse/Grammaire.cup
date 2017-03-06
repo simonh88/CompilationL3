@@ -236,13 +236,11 @@ INSTRUCTIONS ::= INSTRUCTIONS:inst INSTRUCTION:i
 
 CONDITION   ::= SI EXPR:e ALORS INSTRUCTIONS:i FSI
                 {:
-                    System.out.println("SI");
                     RESULT = new Condition(eleft+1, e, i);
                 :}
             |
                 SI EXPR:e ALORS INSTRUCTIONS:si SINON INSTRUCTIONS:sinon FSI
                 {:
-                    System.out.println("SI");
                     RESULT = new Condition(eleft+1, e, si, sinon);
                 :}
 ;
