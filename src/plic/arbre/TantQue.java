@@ -3,17 +3,33 @@ package plic.arbre;
 import plic.arbre.expression.Expression;
 
 public class TantQue extends Boucle {
-
+	
+	private Expression condition;
+    private BlocDinstructions bloc;
+    
 	public TantQue(int no, Expression e, BlocDinstructions b) {
-		super(no, e, b);
-		// TODO Auto-generated constructor stub
+		super(no);
+		condition = e;
+        bloc = b;
 	}
 
 	@Override
 	public String toMIPS() {
-		//A implementer correctement
-		// TODO Auto-generated method stub
-		return null;
+		 //Maintenant dans $v0 on a le resultat de l'expression
+        StringBuilder strb = new StringBuilder();
+        //Bloc de la verification du tant que 
+        strb.append("tant"+noLigne+": \n");
+        
+        strb.append(condition.toMIPS());
+        strb.append("beq $v0, $0, ftant"+noLigne+"\n");
+        //Bloc de l'iteration du tant que 
+        strb.append("iter"+noLigne+": \n");
+        strb.append(bloc.toMIPS());
+        strb.append("j tant"+noLigne+"\n");//On remonte dans la condition
+        //Bloc de fin du tant que 
+        strb.append("ftant"+noLigne+": \n");
+        
+        return strb.toString();
 	}
 
 }

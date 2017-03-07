@@ -5,8 +5,7 @@ import plic.declarations.DeclarationConstante;
 
 public abstract class Boucle extends DeclarationConstante {
 
-	private Expression condition;
-    private BlocDinstructions bloc;
+
 
     /**
      * Juste avec un bloc dans si, pas de sinon
@@ -14,10 +13,9 @@ public abstract class Boucle extends DeclarationConstante {
      * @param e
      * @param bdsi
      */
-    public Boucle(int no, Expression e, BlocDinstructions b) {
+    public Boucle(int no) {
         super(no);
-        condition = e;
-        bloc = b;
+        
     }
 
 

@@ -1,0 +1,18 @@
+classe Test
+
+ecrire "Hello world\n";
+
+
+publique entier a;
+publique entier b;
+
+a = 0;
+b = 0;
+
+
+tant que a < 2 repeter 
+	ecrire a ; 
+	a = a + 1 ;
+ftant
+
+fin

@@ -107,6 +107,9 @@ idf = [_a-zA-Z][_a-zA-Z0-9]{0,30}
 <YYINITIAL> "sinon" { return symbol(CodesLexicaux.SINON ); }
 <YYINITIAL> "alors" { return symbol(CodesLexicaux.ALORS ); }
 <YYINITIAL> "fsi" { return symbol(CodesLexicaux.FSI ); }
+<YYINITIAL> "tant que" { return symbol(CodesLexicaux.TANTQUE);}
+<YYINITIAL> "repeter" { return symbol(CodesLexicaux.REPETER);}
+<YYINITIAL> "ftant" { return symbol(CodesLexicaux.FTANT);}
 
 
 
