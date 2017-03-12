@@ -72,11 +72,11 @@ parser code {:
 
 
 
-terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER ;
+terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER, PLUSPLUS, MOINSMOINS ;
 terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON ;
 
 terminal Symbol    SI, SINON, ALORS, FSI ;
-terminal Symbol	   TANTQUE, FTANT, REPETER;
+terminal Symbol	   TANTQUE, FTANT, REPETER, POUR, FAIRE, FPOUR;
 terminal String    CONSTANTEINT, CONSTANTEBOOL ;
 
 
@@ -256,6 +256,16 @@ BOUCLE 		::= TANTQUE EXPR:e REPETER INSTRUCTIONS:i FTANT
 				{:
 					RESULT = new TantQue(eleft+1,e,i);
 				:}
+				|
+				POUR IDF:i EGAL EXPR:e1 POINTVIRGULE EXPR:e2 POINTVIRGULE IDF:i2 OPEROPER:op FPOUR
+				{:
+					RESULT = new Pour(eleft+1,i,e1,e2,i2,op);
+				:}
+;
+
+OPEROPER 	::= PLUS PLUS
+				|	
+				MOINS MOINS
 ;
 
 AFFECT ::= IDF:i EGAL EXPR:e POINTVIRGULE
