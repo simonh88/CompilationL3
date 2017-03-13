@@ -259,7 +259,7 @@ BOUCLE 		::= TANTQUE EXPR:e REPETER INSTRUCTIONS:i FTANT
 				|
 				POUR PAROUV IDF:i EGAL EXPR:e1 POINTVIRGULE EXPR:e2 POINTVIRGULE EXPR:e3 PARFER DEBPOUR INSTRUCTIONS:inst FPOUR
 				{:
-					RESULT = new Pour(eleft+1,i,e1,e2,e3,inst);
+					RESULT = new Pour(e3left+1,i,e1,e2,e3,inst);
 				:}
 ;
 
