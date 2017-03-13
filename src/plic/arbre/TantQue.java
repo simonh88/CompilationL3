@@ -32,4 +32,10 @@ public class TantQue extends Boucle {
         return strb.toString();
 	}
 
+    @Override
+    public void verifier() {
+        condition.verifier();
+        bloc.verifier();
+    }
+
 }

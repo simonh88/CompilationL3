@@ -52,4 +52,13 @@ public class Pour extends Boucle {
         return strb.toString();
     }
 
+    @Override
+    public void verifier() {
+        idf1.verifier();
+        exp1.verifier();
+        exp2.verifier();
+        exp3.verifier();
+        bloc.verifier();
+    }
+
 }

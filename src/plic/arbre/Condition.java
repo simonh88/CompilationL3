@@ -42,7 +42,9 @@ public class Condition extends DeclarationConstante {
 
     @Override
     public void verifier() {
-
+        condition.verifier();
+        blocSi.verifier();
+        blocSinon.verifier();
     }
 
     @Override
