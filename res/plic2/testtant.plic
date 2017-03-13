@@ -10,7 +10,7 @@ a = 0;
 b = 0;
 
 
-pour (a=0 ; a < 2 ; a = a + 1) debpour
+pour (a=0 ; a < 2 ; a++) debpour
 	ecrire a ; 
 fpour
 
