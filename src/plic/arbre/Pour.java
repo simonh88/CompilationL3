@@ -55,10 +55,10 @@ public class Pour extends Boucle {
 
     @Override
     public void verifier() {
-        idf1.verifier();
+        af1.verifier();
         exp1.verifier();
         exp2.verifier();
-        exp3.verifier();
+        af2.verifier();
         bloc.verifier();
     }
 
