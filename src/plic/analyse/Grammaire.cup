@@ -72,7 +72,7 @@ parser code {:
 
 
 
-terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER, PLUSPLUS, MOINSMOINS ;
+terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER ;
 terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON ;
 
 terminal Symbol    SI, SINON, ALORS, FSI ;
@@ -216,7 +216,7 @@ DECL_CSTE ::= INSTRUCTION:i
             :}
            ;
 
-INSTRUCTION ::= AFFECT:a
+INSTRUCTION ::= AFFECT:a POINTVIRGULE
             {:
                 RESULT = a;
             :}
@@ -257,16 +257,24 @@ BOUCLE 		::= TANTQUE EXPR:e REPETER INSTRUCTIONS:i FTANT
 					RESULT = new TantQue(eleft+1,e,i);
 				:}
 				|
-				POUR PAROUV IDF:i EGAL EXPR:e1 POINTVIRGULE EXPR:e2 POINTVIRGULE EXPR:e3 PARFER DEBPOUR INSTRUCTIONS:inst FPOUR
+				POUR PAROUV AFFECT:a1 POINTVIRGULE EXPR:e2 POINTVIRGULE AFFECT:a2 PARFER DEBPOUR INSTRUCTIONS:inst FPOUR
 				{:
-					RESULT = new Pour(e3left+1,i,e1,e2,e3,inst);
+					RESULT = new Pour(a2left+1,a1,e2, a2, inst);
 				:}
 ;
 
 
-AFFECT ::= IDF:i EGAL EXPR:e POINTVIRGULE
+AFFECT ::= IDF:i EGAL EXPR:e
         {:
             RESULT = new Affectation(i, e, ileft+1);
+        :}
+        | IDF:i PLUS PLUS
+        {:
+            RESULT = new Affectation(i, new Plus(new AccesVariable(i, ileft+1), new ConstanteEntiere("1", ileft+1)), ileft+1);
+        :}
+        | IDF:i MOINS MOINS
+        {:
+            RESULT = new Affectation(i, new Moins(new AccesVariable(i, ileft+1), new ConstanteEntiere("1", ileft+1)), ileft+1);
         :}
         ;
 
@@ -335,16 +343,7 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
                 {:
                     RESULT = a;
                 :}
-        |
-                IDF:i PLUSPLUS
-                {:
-                    RESULT = new Plus(new AccesVariable(i, ileft+1), new ConstanteEntiere("1", ileft+1));
-                :}
-        |
-                IDF:i MOINSMOINS
-                {:
-                    RESULT = new Moins(new AccesVariable(i, ileft+1), new ConstanteEntiere("1", ileft+1));
-                :};
+                ;
 
 CSTE    ::=     CONSTANTEINT:e
                 {: RESULT = new ConstanteEntiere(e, eleft+1) ; :}

@@ -9,9 +9,14 @@ publique entier b;
 a = 0;
 b = 0;
 
+a++;
+ecrire a;
 
-pour (a=0 ; a < 2 ; a++) debpour
-	ecrire a ; 
+
+pour (a=10 ; a > 5 ; a--) debpour
+	ecrire a ;
 fpour
+
+
 
 fin

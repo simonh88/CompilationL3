@@ -1,6 +1,8 @@
 package plic.arbre;
 
+import plic.arbre.expression.AccesVariable;
 import plic.arbre.expression.Expression;
+import plic.declarations.Affectation;
 import plic.tds.Idf;
 
 /**
@@ -8,20 +10,19 @@ import plic.tds.Idf;
  */
 public class Pour extends Boucle {
 
-    private Idf idf1;
+    private Affectation af1;
     private Expression exp1;//Initialisation ex i=0
     private Expression exp2;//Condition
-    private Expression exp3;//Incrémentation
+    private Affectation af2;//Incrémentation
     BlocDinstructions bloc;
 
     /**
      * @param no
      */
-    public Pour(int no, Idf idf1, Expression exp1, Expression exp2, Expression exp3, BlocDinstructions bloc) {
+    public Pour(int no, Affectation af1, Expression exp2, Affectation af2, BlocDinstructions bloc) {
         super(no);
-        this.idf1 = idf1;
-        this.exp1 = exp1;
-        this.exp3 = exp3;
+        this.af1 = af1;
+        this.af2 = af2;
         this.exp2 = exp2;
         this.bloc = bloc;
 
@@ -34,7 +35,7 @@ public class Pour extends Boucle {
         //Maintenant dans $v0 on a le resultat de l'expression
         StringBuilder strb = new StringBuilder();
         //Initialisation boucle
-        strb.append(exp1.toMIPS());
+        strb.append(af1.toMIPS());
         strb.append("pour" + noLigne + ": \n");
 
         strb.append(exp2.toMIPS());
@@ -43,7 +44,7 @@ public class Pour extends Boucle {
         strb.append(bloc.toMIPS());
 
 
-        strb.append(exp3.toMIPS());//On incrémente
+        strb.append(af2.toMIPS());//On incrémente
         strb.append("j pour" + noLigne + "\n");//On remonte dans la condition
 
         //Bloc de fin du pour
