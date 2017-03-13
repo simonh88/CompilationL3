@@ -116,10 +116,6 @@ idf = [_a-zA-Z][_a-zA-Z0-9]{0,30}
 <YYINITIAL> "fpour" { return symbol(CodesLexicaux.FPOUR);}
 
 
-<YYINITIAL> "++" { return symbol(CodesLexicaux.PLUSPLUS);}
-<YYINITIAL> "--" { return symbol(CodesLexicaux.MOINSMOINS);}
-
-
 
 <YYINITIAL> {idf} { return symbol(CodesLexicaux.IDFTERM, yytext()) ; }
 

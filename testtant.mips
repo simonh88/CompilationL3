@@ -29,18 +29,47 @@ li $v0, 0
 
 
 
-li $v0, 0
-pour13: 
 
 lw $v0, 0($s7)
 
 addi $sp, $sp, -4
 sw $v0, 0($sp)
-li $v0, 2
+li $v0, 1
 lw $t8, 0($sp)
 addi $sp, $sp, 4
-slt $v0, $t8, $v0
-beq $v0, $0, fpour13
+add $v0, $t8, $v0
+
+ sw $v0, 0($s7)
+
+
+
+
+lw $v0, 0($s7)
+
+
+move $a0, $v0
+
+li $v0, 1
+
+syscall
+
+
+
+li $v0, 10
+
+ sw $v0, 0($s7)
+
+pour16: 
+
+lw $v0, 0($s7)
+
+addi $sp, $sp, -4
+sw $v0, 0($sp)
+li $v0, 5
+lw $t8, 0($sp)
+addi $sp, $sp, 4
+sgt $v0, $t8, $v0
+beq $v0, $0, fpour16
 
 
 
@@ -61,9 +90,12 @@ sw $v0, 0($sp)
 li $v0, 1
 lw $t8, 0($sp)
 addi $sp, $sp, 4
-add $v0, $t8, $v0
-j pour13
-fpour13: 
+sub $v0, $t8, $v0
+
+ sw $v0, 0($s7)
+
+j pour16
+fpour16: 
 end :
 move $v1, $v0
 li $v0, 10
