@@ -14,12 +14,12 @@ public class Pour extends Boucle {
     private Expression exp1;//Initialisation ex i=0
     private Expression exp2;//Condition
     private Affectation af2;//Incrémentation
-    BlocDinstructions bloc;
+    BlocDeDeclarations bloc;
 
     /**
      * @param no
      */
-    public Pour(int no, Affectation af1, Expression exp2, Affectation af2, BlocDinstructions bloc) {
+    public Pour(int no, Affectation af1, Expression exp2, Affectation af2, BlocDeDeclarations bloc) {
         super(no);
         this.af1 = af1;
         this.af2 = af2;
@@ -55,10 +55,10 @@ public class Pour extends Boucle {
 
     @Override
     public void verifier() {
-        idf1.verifier();
+        af1.verifier();
         exp1.verifier();
         exp2.verifier();
-        exp3.verifier();
+        af2.verifier();
         bloc.verifier();
     }
 

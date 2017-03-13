@@ -10,8 +10,8 @@ public class Condition extends DeclarationConstante {
 
 
     private Expression condition;
-    private BlocDinstructions blocSi;
-    private BlocDinstructions blocSinon;
+    private BlocDeDeclarations blocSi;
+    private BlocDeDeclarations blocSinon;
 
     /**
      * Juste avec un bloc dans si, pas de sinon
@@ -19,7 +19,7 @@ public class Condition extends DeclarationConstante {
      * @param e
      * @param bdsi
      */
-    public Condition(int no, Expression e, BlocDinstructions bdsi) {
+    public Condition(int no, Expression e, BlocDeDeclarations bdsi) {
         super(no);
         condition = e;
         blocSi = bdsi;
@@ -33,7 +33,7 @@ public class Condition extends DeclarationConstante {
      * @param bdsi
      * @param bdsinon
      */
-    public Condition(int no, Expression e, BlocDinstructions bdsi, BlocDinstructions bdsinon) {
+    public Condition(int no, Expression e, BlocDeDeclarations bdsi, BlocDeDeclarations bdsinon) {
         super(no);
         condition = e;
         blocSi = bdsi;

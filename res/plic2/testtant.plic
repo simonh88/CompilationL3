@@ -9,9 +9,6 @@ publique entier b;
 a = 0;
 b = 0;
 
-a++;
-ecrire a;
-
 
 /*pour (a=10 ; a > 5 ; a--) debpour
 	ecrire a ;
@@ -22,7 +19,10 @@ publique entier c;
 
 
 si(a<10) alors
+    ecrire "DEBSI";
     publique entier d;
+    d = 4;
+    ecrire d;
     ecrire "SI";
 sinon
     ecrire "SINON";

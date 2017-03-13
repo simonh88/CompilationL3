@@ -1,9 +1,12 @@
 .data
 str_div_by_0:	.asciiz "ERREUR D'EXECUTION : Division par zero interdite" 
-label_str_2:
+label_str_3:
 .asciiz "SINON"
 
 label_str_1:
+.asciiz "DEBSI"
+
+label_str_2:
 .asciiz "SI"
 
 label_str_0:
@@ -12,7 +15,7 @@ label_str_0:
 .text
 main :
 move $s7,$sp
-addi $sp, $sp, -12
+addi $sp, $sp, -16
 
 
 
@@ -40,17 +43,28 @@ lw $v0, 0($s7)
 
 addi $sp, $sp, -4
 sw $v0, 0($sp)
-li $v0, 1
+li $v0, 10
 lw $t8, 0($sp)
 addi $sp, $sp, 4
-add $v0, $t8, $v0
-
- sw $v0, 0($s7)
-
+slt $v0, $t8, $v0
+beq $v0, $0, sinon21
 
 
 
-lw $v0, 0($s7)
+li $v0, 4
+la $a0, label_str_1
+syscall
+
+
+
+li $v0, 4
+
+ sw $v0, -12($s7)
+
+
+
+
+lw $v0, -12($s7)
 
 
 move $a0, $v0
@@ -62,32 +76,20 @@ syscall
 
 
 
-lw $v0, 0($s7)
-
-addi $sp, $sp, -4
-sw $v0, 0($sp)
-li $v0, 10
-lw $t8, 0($sp)
-addi $sp, $sp, 4
-slt $v0, $t8, $v0
-beq $v0, $0, sinon24
-
-
-
-li $v0, 4
-la $a0, label_str_1
-syscall
-
-j fsi24
-sinon24: 
-
-
-
 li $v0, 4
 la $a0, label_str_2
 syscall
 
-fsi24:
+j fsi21
+sinon21: 
+
+
+
+li $v0, 4
+la $a0, label_str_3
+syscall
+
+fsi21:
 end :
 move $v1, $v0
 li $v0, 10

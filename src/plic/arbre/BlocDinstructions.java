@@ -11,15 +11,15 @@ import java.util.ArrayList;
  */
 public class BlocDinstructions extends ArbreAbstrait{
 
-    protected ArrayList<Instruction> instructions;
+    protected ArrayList<Declaration> instructions;
 
     public BlocDinstructions(int no) {
         super(no);
-        instructions = new ArrayList<Instruction>();
+        instructions = new ArrayList<Declaration>();
     }
 
 
-    public void ajouter(Instruction i){
+    public void ajouter(Declaration i){
         instructions.add(i);
     }
 
@@ -27,7 +27,7 @@ public class BlocDinstructions extends ArbreAbstrait{
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        for (Instruction i : instructions) {
+        for (Declaration i : instructions) {
             sb.append("\n\n");
             sb.append(i);
         }
@@ -37,7 +37,7 @@ public class BlocDinstructions extends ArbreAbstrait{
 
     @Override
     public void verifier() {
-        for (Instruction i : instructions) {
+        for (Declaration i : instructions) {
             i.verifier();
         }
     }
@@ -46,7 +46,7 @@ public class BlocDinstructions extends ArbreAbstrait{
     public String toMIPS() {
         StringBuilder sb = new StringBuilder();
 
-        for (Instruction i : instructions) {
+        for (Declaration i : instructions) {
             sb.append("\n\n");
             sb.append(i.toMIPS());
         }

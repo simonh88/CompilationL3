@@ -102,7 +102,6 @@ non terminal BlocDeDeclarations DECLARATIONS ;
 non terminal String TYPE ;
 non terminal Condition CONDITION ;
 non terminal Boucle BOUCLE ;
-non terminal BlocDinstructions INSTRUCTIONS ;
 
 precedence left PLUS, MOINS;
 precedence left OU ;
@@ -226,38 +225,23 @@ INSTRUCTION ::= AFFECT:a POINTVIRGULE
             :}
 ;
 
-INSTRUCTIONS ::= INSTRUCTIONS:inst INSTRUCTION:i
-            {:
-                inst.ajouter(i);
-                RESULT = inst;
-            :}
-            | INSTRUCTION:i
-            {:
-                BlocDinstructions di = new BlocDinstructions(ileft+1);
-                if (di != null) {
-                    di.ajouter(i);
-                }
-                RESULT = di;
-            :}
-;
-
-CONDITION   ::= SI EXPR:e ALORS INSTRUCTIONS:i FSI
+CONDITION   ::= SI EXPR:e ALORS DECLARATIONS:i FSI
                 {:
                     RESULT = new Condition(eleft+1, e, i);
                 :}
             |
-                SI EXPR:e ALORS INSTRUCTIONS:si SINON INSTRUCTIONS:sinon FSI
+                SI EXPR:e ALORS DECLARATIONS:si SINON DECLARATIONS:sinon FSI
                 {:
                     RESULT = new Condition(eleft+1, e, si, sinon);
                 :}
 ;
 
-BOUCLE 		::= TANTQUE EXPR:e REPETER INSTRUCTIONS:i FTANT
+BOUCLE 		::= TANTQUE EXPR:e REPETER DECLARATIONS:i FTANT
 				{:
 					RESULT = new TantQue(eleft+1,e,i);
 				:}
 				|
-				POUR PAROUV AFFECT:a1 POINTVIRGULE EXPR:e2 POINTVIRGULE AFFECT:a2 PARFER DEBPOUR INSTRUCTIONS:inst FPOUR
+				POUR PAROUV AFFECT:a1 POINTVIRGULE EXPR:e2 POINTVIRGULE AFFECT:a2 PARFER DEBPOUR DECLARATIONS:inst FPOUR
 				{:
 					RESULT = new Pour(a2left+1,a1,e2, a2, inst);
 				:}

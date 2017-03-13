@@ -5,9 +5,9 @@ import plic.arbre.expression.Expression;
 public class TantQue extends Boucle {
 	
 	private Expression condition;
-    private BlocDinstructions bloc;
+    private BlocDeDeclarations bloc;
     
-	public TantQue(int no, Expression e, BlocDinstructions b) {
+	public TantQue(int no, Expression e, BlocDeDeclarations b) {
 		super(no);
 		condition = e;
         bloc = b;
