@@ -10,9 +10,8 @@ a = 0;
 b = 0;
 
 
-tant que a < 2 repeter 
+pour (a=0 ; a < 2 ; a = a + 1) debpour
 	ecrire a ; 
-	a = a + 1 ;
-ftant
+fpour
 
 fin
