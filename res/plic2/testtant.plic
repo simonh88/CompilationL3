@@ -13,9 +13,20 @@ a++;
 ecrire a;
 
 
-pour (a=10 ; a > 5 ; a--) debpour
+/*pour (a=10 ; a > 5 ; a--) debpour
 	ecrire a ;
-fpour
+fpour*/
+
+
+publique entier c;
+
+
+si(a<10) alors
+    publique entier d;
+    ecrire "SI";
+sinon
+    ecrire "SINON";
+fsi
 
 
 
