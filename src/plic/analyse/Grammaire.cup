@@ -338,12 +338,12 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
         |
                 IDF:i PLUSPLUS
                 {:
-                    RESULT = new Plus(i, 1);
+                    RESULT = new Plus(i, new ConstanteEntiere(1, ileft+1));
                 :}
         |
                 IDF:i MOINSMOINS
                 {:
-                    RESULT = new Moins(i, 1);
+                    RESULT = new Moins(i, new ConstanteEntiere(1, ileft+1));
                 :};
 
 CSTE    ::=     CONSTANTEINT:e
