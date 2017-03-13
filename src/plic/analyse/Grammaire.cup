@@ -76,7 +76,7 @@ terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER, PLUSPLUS, MOINSMOINS 
 terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON ;
 
 terminal Symbol    SI, SINON, ALORS, FSI ;
-terminal Symbol	   TANTQUE, FTANT, REPETER, POUR, FAIRE, FPOUR;
+terminal Symbol	   TANTQUE, FTANT, REPETER, POUR, DEBPOUR, FPOUR;
 terminal String    CONSTANTEINT, CONSTANTEBOOL ;
 
 
@@ -257,16 +257,12 @@ BOUCLE 		::= TANTQUE EXPR:e REPETER INSTRUCTIONS:i FTANT
 					RESULT = new TantQue(eleft+1,e,i);
 				:}
 				|
-				POUR IDF:i EGAL EXPR:e1 POINTVIRGULE EXPR:e2 POINTVIRGULE IDF:i2 OPEROPER:op FPOUR
+				POUR PAROUV IDF:i EGAL EXPR:e1 POINTVIRGULE EXPR:e2 POINTVIRGULE EXPR:e3 PARFER DEBPOUR INSTRUCTIONS:inst FPOUR
 				{:
-					RESULT = new Pour(eleft+1,i,e1,e2,i2,op);
+					RESULT = new Pour(eleft+1,i,e1,e2,e3,inst);
 				:}
 ;
 
-OPEROPER 	::= PLUS PLUS
-				|	
-				MOINS MOINS
-;
 
 AFFECT ::= IDF:i EGAL EXPR:e POINTVIRGULE
         {:
@@ -338,6 +334,16 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
                 ACCESS:a
                 {:
                     RESULT = a;
+                :}
+        |
+                IDF:i PLUSPLUS
+                {:
+                    RESULT = new Plus(i, 1);
+                :}
+        |
+                IDF:i MOINSMOINS
+                {:
+                    RESULT = new Moins(i, 1);
                 :};
 
 CSTE    ::=     CONSTANTEINT:e

@@ -111,6 +111,14 @@ idf = [_a-zA-Z][_a-zA-Z0-9]{0,30}
 <YYINITIAL> "repeter" { return symbol(CodesLexicaux.REPETER);}
 <YYINITIAL> "ftant" { return symbol(CodesLexicaux.FTANT);}
 
+<YYINITIAL> "pour" { return symbol(CodesLexicaux.POUR);}
+<YYINITIAL> "debpour" { return symbol(CodesLexicaux.DEBPOUR);}
+<YYINITIAL> "fpour" { return symbol(CodesLexicaux.FPOUR);}
+
+
+<YYINITIAL> "++" { return symbol(CodesLexicaux.PLUSPLUS);}
+<YYINITIAL> "--" { return symbol(CodesLexicaux.MOINSMOINS);}
+
 
 
 <YYINITIAL> {idf} { return symbol(CodesLexicaux.IDFTERM, yytext()) ; }
