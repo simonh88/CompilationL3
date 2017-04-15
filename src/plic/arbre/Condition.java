@@ -23,6 +23,7 @@ public class Condition extends DeclarationConstante {
         super(no);
         condition = e;
         blocSi = bdsi;
+        blocSinon = null;
     }
 
 
@@ -44,7 +45,8 @@ public class Condition extends DeclarationConstante {
     public void verifier() {
         condition.verifier();
         blocSi.verifier();
-        blocSinon.verifier();
+        if(blocSinon != null)
+        	blocSinon.verifier();
     }
 
     @Override

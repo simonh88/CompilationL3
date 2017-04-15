@@ -18,7 +18,7 @@ fpour*/
 publique entier c;
 
 
-si(a<10) alors
+si (a<10) alors
     ecrire "DEBSI";
     publique entier d;
     d = 4;
