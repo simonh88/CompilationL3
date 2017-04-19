@@ -17,12 +17,14 @@ public class TDS {
     //TODO a enlever plus tard du coup puisque maintenant on a la TDSLocale
     private HashMap<Entree, Symbol> hmap;
 
-
+    private static TDSLocale tdsCourante;
     private ArrayList<TDSLocale> tdsLocales;
 
     private TDS() {
         this.hmap = new HashMap<>();//A enlever aussi
         tdsLocales = new ArrayList<>();
+        TDSLocale blocHaut = new TDSLocale();
+        tdsLocales.add(blocHaut);
     }
 
     public static TDS getInstance() {
@@ -37,14 +39,28 @@ public class TDS {
 
     //TODO Entrer bloc et sortie bloc à faire (fonctions)
 
-
+    public void entreeBloc(){
+    	//On crée une nouvelle tds
+    	TDSLocale t = new TDSLocale();
+    	//On set le pere de la nouvelle tds
+    	t.setPere(tdsCourante);
+    	//On ajouter la nouvelle tds comme fils de la tdsCourante
+    	tdsCourante.ajouterFils(t);
+    	//On ajoute a notre table des tds cette tds ajouter
+    	tdsLocales.add(t);
+    	//On positionne la tdsCourante a la nouvelle TDSLocale cree
+    	tdsCourante = t;
+    }
+    
+    public void sortieBloc(){
+    	//On remet la tdsCourante a la tds parente de la tdsCourante 
+    	tdsCourante = tdsCourante.getPere();
+    }
 
 
     //TODO A remodifier pour créer une tdsLOcale et penser au check
     public void ajouter(Entree entree, Symbol symbol) {
-        if(this.hmap.containsKey(entree)) throw new DoubleDeclarationException("Multiple déclarations de la variable : "+entree.toString());
-
-        this.hmap.put(entree, symbol);
+        tdsCourante.ajouter(entree, symbol);
     }
 
     /**
@@ -75,8 +91,11 @@ public class TDS {
      * @return
      */
     public Symbol identifier(Entree e, int noligne) {
-        if (hmap.get(e) == null) throw new VariableNonDeclareeException(e.toString(), noligne);
-        return hmap.get(e);
+        if (tdsCourante.getHmap().get(e) == null && tdsCourante.getPere().getHmap().get(e) == null) throw new VariableNonDeclareeException(e.toString(), noligne);
+        if (tdsCourante.getHmap().get(e) == null)
+        	return tdsCourante.getPere().getHmap().get(e);
+        else
+        	return tdsCourante.getHmap().get(e);
     }
 
     public String toString() {

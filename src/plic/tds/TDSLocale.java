@@ -3,6 +3,7 @@ package plic.tds;
 import plic.exceptions.DoubleDeclarationException;
 import plic.exceptions.VariableNonDeclareeException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,13 +21,14 @@ public class TDSLocale {
      */
 
     private HashMap<Entree, Symbol> hmap;
-
     //Si le parent est nul c'est que c'est le bloc Principal
     private TDSLocale parent;
+    private ArrayList<TDSLocale> fils;
 
 
     public TDSLocale(){
         this.hmap = new HashMap<>();
+        this.fils = new ArrayList<TDSLocale>();
     }
 
 
@@ -56,7 +58,12 @@ public class TDSLocale {
     }
 
 
-    public String toString() {
+    public HashMap<Entree, Symbol> getHmap() {
+		return hmap;
+	}
+
+
+	public String toString() {
         StringBuilder sb = new StringBuilder();
 
         for (Map.Entry<Entree, Symbol> entry : this.hmap.entrySet()) {
@@ -70,5 +77,17 @@ public class TDSLocale {
         }
 
         return sb.toString();
+    }
+    
+    public void setPere(TDSLocale t){
+    	this.parent = t;
+    }
+    
+    public TDSLocale getPere(){
+    	return this.parent;
+    }
+    
+    public void ajouterFils(TDSLocale t){
+    	this.fils.add(t);
     }
 }
