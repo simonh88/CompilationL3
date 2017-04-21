@@ -29,6 +29,7 @@ public class TDSLocale {
     public TDSLocale(){
         this.hmap = new HashMap<>();
         this.fils = new ArrayList<TDSLocale>();
+        this.parent = null;
     }
 
 

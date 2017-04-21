@@ -25,6 +25,7 @@ public class TDS {
         tdsLocales = new ArrayList<>();
         TDSLocale blocHaut = new TDSLocale();
         tdsLocales.add(blocHaut);
+        tdsCourante = blocHaut;
     }
 
     public static TDS getInstance() {

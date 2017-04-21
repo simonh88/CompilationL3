@@ -1,0 +1,18 @@
+.data
+str_div_by_0:	.asciiz "ERREUR D'EXECUTION : Division par zero interdite" 
+.text
+main :
+move $s7,$sp
+addi $sp, $sp, 0
+
+end :
+move $v1, $v0
+li $v0, 10
+syscall
+
+print_exception_div_zero:
+li $v0, 4
+la $a0, str_div_by_0
+syscall
+b end
+
