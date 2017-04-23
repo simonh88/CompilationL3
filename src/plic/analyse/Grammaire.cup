@@ -119,11 +119,15 @@ SYSTEME ::= CLASSE:c {: RESULT = c; :} ;
 
 CLASSE ::= CLASSETERM IDF:i DECLARATIONS:ds FIN
            {:
+           		TDS.getInstance().entreeBloc();
                 RESULT = new Classe(i, ds, ileft+1);
+                TDS.getInstance().sortieBloc();
            :}
            | CLASSETERM IDF:i FIN
            {:
+           		TDS.getInstance().entreeBloc();
                 RESULT = new Classe(i, null, ileft+1);
+                TDS.getInstance().sortieBloc();
            :}
            ;
 

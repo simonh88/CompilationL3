@@ -5,6 +5,24 @@ main :
 move $s7,$sp
 addi $sp, $sp, 0
 
+
+
+li $v0, 5
+
+ sw $v0, 0($s7)
+
+
+
+
+lw $v0, 0($s7)
+
+
+move $a0, $v0
+
+li $v0, 1
+
+syscall
+
 end :
 move $v1, $v0
 li $v0, 10

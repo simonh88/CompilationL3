@@ -2,4 +2,9 @@ classe Test
 
 publique entier a;
 
+a = 5 ; 
+
+ecrire a; 
+
 fin
+
