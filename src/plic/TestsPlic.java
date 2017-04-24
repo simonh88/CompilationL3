@@ -20,6 +20,6 @@ public class TestsPlic {
             plic(i);
         }*/
 
-        new Plic("res/plic2/testtant.plic");
+        new Plic("res/plic3/test1.plic");
     }
 }

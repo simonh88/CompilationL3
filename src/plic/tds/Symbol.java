@@ -28,6 +28,10 @@ public class Symbol {
         return this.deplacement;
     }
 
+    public void setDeplacement(int deplacement) {
+        this.deplacement = deplacement;
+    }
+
     public String toString() {
         return statut + " - " + type + " - " + deplacement;
     }

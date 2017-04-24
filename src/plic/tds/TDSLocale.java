@@ -24,12 +24,18 @@ public class TDSLocale {
     //Si le parent est nul c'est que c'est le bloc Principal
     private TDSLocale parent;
     private ArrayList<TDSLocale> fils;
+    private int base;
+
+    private int id;
 
 
-    public TDSLocale(){
+    public TDSLocale(int id){
         this.hmap = new HashMap<>();
         this.fils = new ArrayList<TDSLocale>();
         this.parent = null;
+        this.base = 0;
+
+        this.id = id;
     }
 
 
@@ -42,8 +48,20 @@ public class TDSLocale {
      * @return
      */
     public Symbol identifier(Entree e, int noligne) {
-        if (hmap.get(e) == null) throw new VariableNonDeclareeException(e.toString(), noligne);
-        return hmap.get(e);
+
+        if (hmap.get(e) != null){
+            return hmap.get(e);
+        }
+
+        else{
+            if(this.getPere() != null)
+            {
+                return this.getPere().identifier(e, noligne);
+            }
+            else{
+                return null;
+            }
+        }
     }
 
     /**
@@ -52,10 +70,14 @@ public class TDSLocale {
      * @param symbol
      */
     public void ajouter(Entree entree, Symbol symbol) {
-        //TODO VERIFS
+
         if(this.hmap.containsKey(entree)) throw new DoubleDeclarationException("Multiple déclarations de la variable : "+entree.toString());
 
+        System.out.println("Ajout : "+entree.getNom() + " - " + symbol.toString());
+
         this.hmap.put(entree, symbol);
+
+        System.out.println(this.toString());
     }
 
 
@@ -71,7 +93,7 @@ public class TDSLocale {
             Entree e = entry.getKey();
             Symbol s = entry.getValue();
 
-            sb.append("Entree : ");
+            sb.append("\n### Entree : ");
             sb.append(e.toString());
             sb.append(" - Symbol : ");
             sb.append(s.toString());
@@ -90,5 +112,13 @@ public class TDSLocale {
     
     public void ajouterFils(TDSLocale t){
     	this.fils.add(t);
+    }
+
+    public int getBase() {
+        return base;
+    }
+
+    public void setBase(int base) {
+        this.base = base;
     }
 }

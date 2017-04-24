@@ -2,6 +2,7 @@ package plic.arbre;
 
 import plic.declarations.Declaration;
 import plic.exceptions.AnalyseException;
+import plic.tds.TDS;
 
 import java.util.ArrayList;
 

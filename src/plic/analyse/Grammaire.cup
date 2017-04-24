@@ -102,6 +102,7 @@ non terminal BlocDeDeclarations DECLARATIONS ;
 non terminal String TYPE ;
 non terminal Condition CONDITION ;
 non terminal Boucle BOUCLE ;
+non terminal BlocDeClasses CLASSES;
 
 precedence left PLUS, MOINS;
 precedence left OU ;
@@ -115,17 +116,31 @@ precedence left NON ;
 
 start with SYSTEME ;
 
-SYSTEME ::= CLASSE:c {: RESULT = c; :} ;
+SYSTEME ::= CLASSES:c {: RESULT = c; :} ;
+
+CLASSES ::= CLASSES:cs CLASSE:c
+            {:
+                TDS.getInstance().entreeBloc();
+                cs.ajouter(c);
+                RESULT = cs;
+            :}
+            |
+            CLASSE :c
+            {:
+                BlocDeClasses cs = new BlocDeClasses(cleft+1) ;
+                TDS.getInstance().entreeBloc();
+                cs.ajouter(c) ;
+                RESULT = cs ;
+            :}
+;
 
 CLASSE ::= CLASSETERM IDF:i DECLARATIONS:ds FIN
            {:
-           		TDS.getInstance().entreeBloc();
                 RESULT = new Classe(i, ds, ileft+1);
                 TDS.getInstance().sortieBloc();
            :}
            | CLASSETERM IDF:i FIN
            {:
-           		TDS.getInstance().entreeBloc();
                 RESULT = new Classe(i, null, ileft+1);
                 TDS.getInstance().sortieBloc();
            :}
@@ -141,10 +156,12 @@ DECLARATIONS ::= DECLARATIONS:dec DECLARATION:d
             :}
             | DECLARATION:d
             {:
+
                 BlocDeDeclarations ds = new BlocDeDeclarations(dleft+1);
                 if (d != null) {
                     ds.ajouter(d);
                 }
+
                 RESULT = ds;
             :}
             ;
@@ -162,6 +179,12 @@ DECLARATION ::= DECL_CHAMP:d
 
 DECL_CHAMP ::= STATUS:s TYPE:t IDFS:i POINTVIRGULE
                {:
+                    if(!TDS.getInstance().isFirstClass()){
+                        System.out.println("FirstClass");
+                        TDS.getInstance().entreeBloc(); //rentre dans le bloc de la premiere classe
+                        TDS.getInstance().setFirstClass(true);
+                    }
+
                     for (Idf champ : i) {
                         TDS.getInstance().ajouter(new Entree(champ.getNom()), new Symbol(s, t));
                     }

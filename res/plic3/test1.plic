@@ -1,0 +1,24 @@
+classe Test
+
+publique entier a;
+publique entier b;
+
+a = 1;
+b = 0;
+ecrire a;
+
+
+fin
+
+classe Test2
+
+publique entier a;
+publique entier b;
+
+a = 2;
+b = 3;
+
+ecrire a;
+
+
+fin
