@@ -1,5 +1,6 @@
 package plic.arbre;
 
+import plic.declarations.Declaration;
 import plic.tds.Idf;
 import plic.tds.TDC;
 import plic.tds.TDS;
@@ -7,7 +8,7 @@ import plic.tds.TDS;
 /**
  * Created by simon on 14/02/17.
  */
-public class Classe extends BlocDeDeclarations {
+public class Classe extends Declaration {
 
 
     private Idf nom;
@@ -47,5 +48,9 @@ public class Classe extends BlocDeDeclarations {
         sb.append("}\n");
 
         return sb.toString();
+    }
+
+    public String getNom(){
+        return this.nom.getNom();
     }
 }

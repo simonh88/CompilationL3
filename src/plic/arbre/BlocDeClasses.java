@@ -22,6 +22,7 @@ public class BlocDeClasses extends ArbreAbstrait {
 
     public void ajouter(Classe c) {
         classes.add(c);
+        TDS.getInstance().addClasse(c);
     }
 
     @Override

@@ -116,6 +116,11 @@ idf = [_a-zA-Z][_a-zA-Z0-9]{0,30}
 <YYINITIAL> "fpour" { return symbol(CodesLexicaux.FPOUR);}
 
 
+// ------ Plic3 ------ //
+
+<YYINITIAL> "nouveau" { return symbol(CodesLexicaux.NOUVEAU ); }
+
+
 
 <YYINITIAL> {idf} { return symbol(CodesLexicaux.IDFTERM, yytext()) ; }
 

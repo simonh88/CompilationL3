@@ -79,6 +79,8 @@ terminal Symbol    SI, SINON, ALORS, FSI ;
 terminal Symbol	   TANTQUE, FTANT, REPETER, POUR, DEBPOUR, FPOUR;
 terminal String    CONSTANTEINT, CONSTANTEBOOL ;
 
+terminal Symbol    NOUVEAU;
+
 
 terminal Symbol    ECRIRETERM, POINTVIRGULE, VIRGULE, CLASSETERM, FIN, PUBLIQUE ;
 terminal Symbol    PRIVEE, ENTIER, EGAL;
@@ -103,6 +105,7 @@ non terminal String TYPE ;
 non terminal Condition CONDITION ;
 non terminal Boucle BOUCLE ;
 non terminal BlocDeClasses CLASSES;
+non terminal Instanciation INSTANCIATION;
 
 precedence left PLUS, MOINS;
 precedence left OU ;
@@ -141,15 +144,17 @@ CLASSES ::= CLASSES:cs CLASSE:c
 
 CLASSE ::= CLASSETERM IDF:i DECLARATIONS:ds FIN
            {:
-                RESULT = new Classe(i, ds, ileft+1);
+                Classe c = new Classe(i, ds, ileft+1);
                 TDS.getInstance().sortieBloc();
                 System.out.println("FIN CLASSE");
+                RESULT = c;
            :}
            | CLASSETERM IDF:i FIN
            {:
-                RESULT = new Classe(i, null, ileft+1);
+                Classe c = new Classe(i, null, ileft+1);
                 TDS.getInstance().sortieBloc();
                 System.out.println("FIN CLASSE");
+                RESULT = c;
            :}
            ;
 
@@ -180,6 +185,10 @@ DECLARATION ::= DECL_CHAMP:d
                 | DECL_CSTE:d
                 {:
                     RESULT = d;
+                :}
+                | CLASSE:c
+                {:
+                    RESULT = c;
                 :}
                 ;
 
@@ -232,6 +241,10 @@ TYPE ::= ENTIER:e
       {:
             RESULT = "entier";
       :}
+      | IDF:i
+      {:
+            RESULT = i.getNom();
+      :}
       ;
 
 DECL_CSTE ::= INSTRUCTION:i
@@ -245,9 +258,15 @@ DECL_CSTE ::= INSTRUCTION:i
             | 
               BOUCLE:b
             {:
-            	RESULT = b; 
+            	RESULT = b;
             :}
            ;
+
+INSTANCIATION ::= IDF:var EGAL NOUVEAU IDF:classe PAROUV PARFER
+            {:
+                RESULT = new Instanciation(varleft+1, var, classe);
+            :}
+;
 
 INSTRUCTION ::= AFFECT:a POINTVIRGULE
             {:
@@ -256,6 +275,10 @@ INSTRUCTION ::= AFFECT:a POINTVIRGULE
             | ECRIRE:e
             {:
                 RESULT = e;
+            :}
+            | INSTANCIATION:i POINTVIRGULE
+            {:
+                RESULT = i;
             :}
 ;
 

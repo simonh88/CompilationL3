@@ -16,19 +16,16 @@ fin
 
 classe Test2
 
-publique entier c;
-publique entier d;
 publique entier a;
 
-c = 3;
-d = 4;
+publique Test objet;
+
 a = 1664;
 
+
 ecrire "\n\nClasse 2\n";
-ecrire "c : ";
-ecrire c;
-ecrire "\nd : ";
-ecrire d;
+
+objet = nouveau Test();
 ecrire "\na local : ";
 ecrire a;
 

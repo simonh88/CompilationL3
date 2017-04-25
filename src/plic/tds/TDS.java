@@ -1,11 +1,14 @@
 package plic.tds;
 
+import plic.arbre.Classe;
+import plic.declarations.Instruction;
 import plic.exceptions.DoubleDeclarationException;
 import plic.exceptions.VariableNonDeclareeException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by antoine on 12/02/17.
@@ -17,11 +20,9 @@ public class TDS {
 
     private static TDSLocale tdsCourante;
     private ArrayList<TDSLocale> tdsLocales;
+    private HashMap<Classe, Integer> listeClasses;
     private boolean firstClass;
     private int tailleZoneDesVariables;
-
-    private int countVar;
-    private int nbVar;
 
     private int id;
 
@@ -33,8 +34,8 @@ public class TDS {
         firstClass = false;
         id = 0;
         tailleZoneDesVariables = 12;
-        countVar = 0;
-        nbVar = 0;
+
+        listeClasses = new HashMap<>();
     }
 
     public static TDS getInstance() {
@@ -78,8 +79,6 @@ public class TDS {
     public void ajouter(Entree entree, Symbol symbol) {
 
         tdsCourante.ajouter(entree, symbol);
-        TDV.getInstance().add(id);
-        nbVar++;
 
         tailleZoneDesVariables += 4;
     }
@@ -93,14 +92,6 @@ public class TDS {
      * @return
      */
     public Symbol identifier(Entree e, int noligne) {
-
-        /*System.out.println("____________________________________________");
-        System.out.println("countVar : " + countVar + " - nbVar : " + nbVar);
-
-        System.out.println("         : "+countVar%nbVar);
-
-        int TDSid = TDV.getInstance().get(countVar%nbVar);
-        countVar++;*/
 
         int TDSid = id;
 
@@ -144,5 +135,43 @@ public class TDS {
 
     public void setTailleZoneDesVariables(int tailleZoneVariables) {
         this.tailleZoneDesVariables = tailleZoneVariables;
+    }
+
+    public void addClasse(Classe c) {
+        this.listeClasses.put(c, id-1);
+    }
+
+    public Classe getClasse(String nom) {
+
+        for(Map.Entry<Classe, Integer> entry : listeClasses.entrySet()) {
+            Classe key = entry.getKey();
+
+            if (Objects.equals(key.getNom(), nom)) return key;
+        }
+
+        return null;
+    }
+
+    public int getClasseId(String nom) {
+
+        for(Map.Entry<Classe, Integer> entry : listeClasses.entrySet()) {
+            Classe key = entry.getKey();
+            Integer value = entry.getValue();
+
+            if (Objects.equals(key.getNom(), nom)) return value;
+        }
+
+        return 0;
+    }
+
+    public boolean hasClasse(Idf i) {
+
+        for(Map.Entry<Classe, Integer> entry : listeClasses.entrySet()) {
+            Classe key = entry.getKey();
+
+            if (Objects.equals(key.getNom(), i.getNom())) return true;
+        }
+
+        return false;
     }
 }
