@@ -122,7 +122,7 @@ start with SYSTEME ;
 
 SYSTEME ::= CLASSES:c
             {:
-                System.out.println("FIN SYSTEME - RESET id");
+                //System.out.println("FIN SYSTEME - RESET id");
                 TDS.getInstance().setId(1);
                 RESULT = c;
             :} ;
@@ -147,14 +147,14 @@ CLASSE ::= CLASSETERM IDF:i DECLARATIONS:ds FIN
            {:
                 Classe c = new Classe(i, ds, ileft+1);
                 TDS.getInstance().sortieBloc();
-                System.out.println("FIN CLASSE");
+                //System.out.println("FIN CLASSE");
                 RESULT = c;
            :}
            | CLASSETERM IDF:i FIN
            {:
                 Classe c = new Classe(i, null, ileft+1);
                 TDS.getInstance().sortieBloc();
-                System.out.println("FIN CLASSE");
+                //System.out.println("FIN CLASSE");
                 RESULT = c;
            :}
            ;
@@ -197,7 +197,7 @@ DECLARATION ::= DECL_CHAMP:d
 DECL_CHAMP ::= STATUS:s TYPE:t IDFS:i POINTVIRGULE
                {:
                     if(!TDS.getInstance().isFirstClass()){
-                        System.out.println("FirstClass");
+                        //System.out.println("FirstClass");
                         TDS.getInstance().entreeBloc(); //rentre dans le bloc de la premiere classe
                         TDS.getInstance().setFirstClass(true);
                     }

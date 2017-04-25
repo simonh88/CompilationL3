@@ -72,11 +72,11 @@ public class TDSLocale {
         if (this.hmap.containsKey(entree))
             throw new DoubleDeclarationException("Multiple déclarations de la variable : " + entree.toString());
 
-        System.out.println("Ajout : " + entree.getNom() + " - " + symbol.toString());
+        //System.out.println("Ajout : " + entree.getNom() + " - " + symbol.toString());
 
         this.hmap.put(entree, symbol);
 
-        System.out.println(this.toString());
+        //System.out.println(this.toString());
     }
 
 

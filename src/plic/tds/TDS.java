@@ -51,7 +51,7 @@ public class TDS {
 
     public void entreeBloc() {
 
-        System.out.println("EntreeBloc " + (id + 1) + "\n");
+        //System.out.println("EntreeBloc " + (id + 1) + "\n");
 
         //On crée une nouvelle tds
         id++;
@@ -69,7 +69,7 @@ public class TDS {
     }
 
     public void sortieBloc() {
-        System.out.println("SortieBloc " + id + " \n");
+        //System.out.println("SortieBloc " + id + " \n");
         //On remet la tdsCourante a la tds parente de la tdsCourante
         tdsCourante = tdsCourante.getPere();
     }
@@ -95,11 +95,11 @@ public class TDS {
 
         int TDSid = id;
 
-        System.out.println("TDS : " + TDSid + " - Identifier : \n");
+        //System.out.println("TDS : " + TDSid + " - Identifier : \n");
 
         Symbol res = tdsLocales.get(TDSid).identifier(e, noligne);
 
-        System.out.println(tdsLocales.get(TDSid).toString() + "\n\n");
+        //System.out.println(tdsLocales.get(TDSid).toString() + "\n\n");
 
         if (res == null) throw new VariableNonDeclareeException(e.toString(), noligne);
 

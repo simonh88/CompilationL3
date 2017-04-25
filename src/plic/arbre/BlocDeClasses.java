@@ -47,7 +47,7 @@ public class BlocDeClasses extends ArbreAbstrait {
             sb.append("\n\n");
             sb.append(c.toMIPS());
             TDS.getInstance().setId(TDS.getInstance().getId()+1);
-            System.out.println("~~~~~~~~~~~ "+TDS.getInstance().getId());
+            //System.out.println("~~~~~~~~~~~ "+TDS.getInstance().getId());
         }
         TDS.getInstance().setId(1);
 
@@ -62,7 +62,7 @@ public class BlocDeClasses extends ArbreAbstrait {
         for (Classe c : classes) {
             c.verifier();
             TDS.getInstance().setId(TDS.getInstance().getId()+1);
-            System.out.println("~~~~~~~~~~~ "+TDS.getInstance().getId());
+            //System.out.println("~~~~~~~~~~~ "+TDS.getInstance().getId());
         }
         TDS.getInstance().setId(1);
     }

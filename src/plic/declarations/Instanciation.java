@@ -31,13 +31,13 @@ public class Instanciation extends Instruction {
 
         int id = TDS.getInstance().getId();
 
-        System.out.println("#########   id de la classe : "+ TDS.getInstance().getClasseId(classe.getNom()));
+        //System.out.println("#########   id de la classe : "+ TDS.getInstance().getClasseId(classe.getNom()));
 
         TDS.getInstance().setId(TDS.getInstance().getClasseId(classe.getNom()));
 
         sb.append(c.toMIPS());
 
-        System.out.println("#########   remet le bon id : "+ id);
+        //System.out.println("#########   remet le bon id : "+ id);
 
         TDS.getInstance().setId(id);
         sb.append("\n sw $v0, ");
