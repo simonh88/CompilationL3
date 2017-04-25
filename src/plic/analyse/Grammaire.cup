@@ -79,7 +79,7 @@ terminal Symbol    SI, SINON, ALORS, FSI ;
 terminal Symbol	   TANTQUE, FTANT, REPETER, POUR, DEBPOUR, FPOUR;
 terminal String    CONSTANTEINT, CONSTANTEBOOL ;
 
-terminal Symbol    NOUVEAU;
+terminal Symbol    NOUVEAU, FONC, ACCOUV, ACCFER;
 
 
 terminal Symbol    ECRIRETERM, POINTVIRGULE, VIRGULE, CLASSETERM, FIN, PUBLIQUE ;
@@ -106,6 +106,7 @@ non terminal Condition CONDITION ;
 non terminal Boucle BOUCLE ;
 non terminal BlocDeClasses CLASSES;
 non terminal Instanciation INSTANCIATION;
+non terminal Fonction FONCTION;
 
 precedence left PLUS, MOINS;
 precedence left OU ;
@@ -268,6 +269,12 @@ INSTANCIATION ::= IDF:var EGAL NOUVEAU IDF:classe PAROUV PARFER
             :}
 ;
 
+FONCTION ::= FONC IDF:nom PAROUV PARFER ACCOUV DECLARATIONS:ds ACCFER
+            {:
+                RESULT = new Fonction(nomleft+1, nom, ds);
+            :}
+;
+
 INSTRUCTION ::= AFFECT:a POINTVIRGULE
             {:
                 RESULT = a;
@@ -279,6 +286,10 @@ INSTRUCTION ::= AFFECT:a POINTVIRGULE
             | INSTANCIATION:i POINTVIRGULE
             {:
                 RESULT = i;
+            :}
+            | FONCTION:f
+            {:
+                RESULT = f;
             :}
 ;
 

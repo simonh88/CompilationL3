@@ -119,6 +119,9 @@ idf = [_a-zA-Z][_a-zA-Z0-9]{0,30}
 // ------ Plic3 ------ //
 
 <YYINITIAL> "nouveau" { return symbol(CodesLexicaux.NOUVEAU ); }
+<YYINITIAL> "fonction" { return symbol(CodesLexicaux.FONC ); }
+<YYINITIAL> "{" { return symbol(CodesLexicaux.ACCOUV ); }
+<YYINITIAL> "}" { return symbol(CodesLexicaux.ACCFER ); }
 
 
 
