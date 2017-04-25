@@ -29,7 +29,7 @@ public class TDSLocale {
     private int id;
 
 
-    public TDSLocale(int id){
+    public TDSLocale(int id) {
         this.hmap = new HashMap<>();
         this.fils = new ArrayList<TDSLocale>();
         this.parent = null;
@@ -43,22 +43,19 @@ public class TDSLocale {
      * L'identifier là doit chercher uniquement dans sa tdsLocale
      * S'il ne retourne rien, on regarde dans les parents pour voir si la variable est
      * déjà définie ou non
+     *
      * @param e
      * @param noligne
      * @return
      */
     public Symbol identifier(Entree e, int noligne) {
 
-        if (hmap.get(e) != null){
+        if (hmap.get(e) != null) {
             return hmap.get(e);
-        }
-
-        else{
-            if(this.getPere() != null)
-            {
+        } else {
+            if (this.getPere() != null) {
                 return this.getPere().identifier(e, noligne);
-            }
-            else{
+            } else {
                 return null;
             }
         }
@@ -66,14 +63,16 @@ public class TDSLocale {
 
     /**
      * Penser à faire les vérifs de double décalations etc..
+     *
      * @param entree
      * @param symbol
      */
     public void ajouter(Entree entree, Symbol symbol) {
 
-        if(this.hmap.containsKey(entree)) throw new DoubleDeclarationException("Multiple déclarations de la variable : "+entree.toString());
+        if (this.hmap.containsKey(entree))
+            throw new DoubleDeclarationException("Multiple déclarations de la variable : " + entree.toString());
 
-        System.out.println("Ajout : "+entree.getNom() + " - " + symbol.toString());
+        System.out.println("Ajout : " + entree.getNom() + " - " + symbol.toString());
 
         this.hmap.put(entree, symbol);
 
@@ -82,11 +81,11 @@ public class TDSLocale {
 
 
     public HashMap<Entree, Symbol> getHmap() {
-		return hmap;
-	}
+        return hmap;
+    }
 
 
-	public String toString() {
+    public String toString() {
         StringBuilder sb = new StringBuilder();
 
         for (Map.Entry<Entree, Symbol> entry : this.hmap.entrySet()) {
@@ -101,17 +100,17 @@ public class TDSLocale {
 
         return sb.toString();
     }
-    
-    public void setPere(TDSLocale t){
-    	this.parent = t;
+
+    public void setPere(TDSLocale t) {
+        this.parent = t;
     }
-    
-    public TDSLocale getPere(){
-    	return this.parent;
+
+    public TDSLocale getPere() {
+        return this.parent;
     }
-    
-    public void ajouterFils(TDSLocale t){
-    	this.fils.add(t);
+
+    public void ajouterFils(TDSLocale t) {
+        this.fils.add(t);
     }
 
     public int getBase() {

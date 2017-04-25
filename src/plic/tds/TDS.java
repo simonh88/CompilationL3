@@ -20,6 +20,9 @@ public class TDS {
     private boolean firstClass;
     private int tailleZoneDesVariables;
 
+    private int countVar;
+    private int nbVar;
+
     private int id;
 
     private TDS() {
@@ -30,6 +33,8 @@ public class TDS {
         firstClass = false;
         id = 0;
         tailleZoneDesVariables = 12;
+        countVar = 0;
+        nbVar = 0;
     }
 
     public static TDS getInstance() {
@@ -41,33 +46,31 @@ public class TDS {
     }
 
 
-
-
     //TODO Entrer bloc et sortie bloc à faire (fonctions)
 
-    public void entreeBloc(){
+    public void entreeBloc() {
 
-        System.out.println("EntreeBloc " + (id+1) + "\n");
+        System.out.println("EntreeBloc " + (id + 1) + "\n");
 
-    	//On crée une nouvelle tds
+        //On crée une nouvelle tds
         id++;
-    	TDSLocale t = new TDSLocale(id);
-    	//On set le pere de la nouvelle tds
-    	t.setPere(tdsCourante);
-    	//On ajouter la nouvelle tds comme fils de la tdsCourante
-    	tdsCourante.ajouterFils(t);
-    	//On ajoute a notre table des tds cette tds ajouter
-    	tdsLocales.add(t);
-    	//On la déplace a sa mémoire allouée
-    	t.setBase(0);
-    	//On positionne la tdsCourante a la nouvelle TDSLocale cree
-    	tdsCourante = t;
+        TDSLocale t = new TDSLocale(id);
+        //On set le pere de la nouvelle tds
+        t.setPere(tdsCourante);
+        //On ajouter la nouvelle tds comme fils de la tdsCourante
+        tdsCourante.ajouterFils(t);
+        //On ajoute a notre table des tds cette tds ajouter
+        tdsLocales.add(t);
+        //On la déplace a sa mémoire allouée
+        t.setBase(0);
+        //On positionne la tdsCourante a la nouvelle TDSLocale cree
+        tdsCourante = t;
     }
-    
-    public void sortieBloc(){
+
+    public void sortieBloc() {
         System.out.println("SortieBloc " + id + " \n");
-    	//On remet la tdsCourante a la tds parente de la tdsCourante 
-    	tdsCourante = tdsCourante.getPere();
+        //On remet la tdsCourante a la tds parente de la tdsCourante
+        tdsCourante = tdsCourante.getPere();
     }
 
 
@@ -75,47 +78,39 @@ public class TDS {
     public void ajouter(Entree entree, Symbol symbol) {
 
         tdsCourante.ajouter(entree, symbol);
+        TDV.getInstance().add(id);
+        nbVar++;
 
         tailleZoneDesVariables += 4;
     }
 
-    /**
-     * FOnction qu'il faut refaire dans la tdsLOcale
-     * @return
-     */
-    /*public int getTailleZoneDesVariables() {
-        int size = 0;
-
-        for(Map.Entry<Entree, Symbol> entry : this.hmap.entrySet()) {
-            Entree e = entry.getKey();
-            Symbol s = entry.getValue();
-
-            size += s.getDeplacement();
-        }
-
-        return size;
-
-        //TODO MODIF QUAND ON IMPLEMENTERA LES AUTRES TYPES
-        //return -(hmap.size() * 4);
-        return tailleZoneVariables;
-    }*/
-
 
     /**
      * Ici, identifier doit chercher dans les tdsLocales, et rechercher dans le parent si cela est vide.
+     *
      * @param e
      * @param noligne
      * @return
      */
     public Symbol identifier(Entree e, int noligne) {
 
-        Symbol res = tdsCourante.identifier(e, noligne);
+        /*System.out.println("____________________________________________");
+        System.out.println("countVar : " + countVar + " - nbVar : " + nbVar);
 
-        System.out.println("TDS : +" + id + "Identifier : \n");
+        System.out.println("         : "+countVar%nbVar);
 
-        System.out.println(tdsCourante.toString()+"\n\n");
+        int TDSid = TDV.getInstance().get(countVar%nbVar);
+        countVar++;*/
 
-        if(res == null) throw new VariableNonDeclareeException(e.toString(), noligne);
+        int TDSid = id;
+
+        System.out.println("TDS : " + TDSid + " - Identifier : \n");
+
+        Symbol res = tdsLocales.get(TDSid).identifier(e, noligne);
+
+        System.out.println(tdsLocales.get(TDSid).toString() + "\n\n");
+
+        if (res == null) throw new VariableNonDeclareeException(e.toString(), noligne);
 
         return res;
     }
@@ -135,8 +130,12 @@ public class TDS {
         this.firstClass = firstClass;
     }
 
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public int getTailleZoneDesVariables() {

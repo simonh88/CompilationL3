@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by antoine on 24/04/17.
  */
-public class BlocDeClasses extends ArbreAbstrait{
+public class BlocDeClasses extends ArbreAbstrait {
 
 
     protected ArrayList<Classe> classes;
@@ -40,14 +40,15 @@ public class BlocDeClasses extends ArbreAbstrait{
         StringBuilder sb = new StringBuilder();
 
 
-
         sb.append(this.header());
 
         for (Classe c : classes) {
             sb.append("\n\n");
             sb.append(c.toMIPS());
+            TDS.getInstance().setId(TDS.getInstance().getId()+1);
+            System.out.println("~~~~~~~~~~~ "+TDS.getInstance().getId());
         }
-
+        TDS.getInstance().setId(1);
 
 
         sb.append(this.footer());
@@ -59,7 +60,10 @@ public class BlocDeClasses extends ArbreAbstrait{
     public void verifier() throws AnalyseException {
         for (Classe c : classes) {
             c.verifier();
+            TDS.getInstance().setId(TDS.getInstance().getId()+1);
+            System.out.println("~~~~~~~~~~~ "+TDS.getInstance().getId());
         }
+        TDS.getInstance().setId(1);
     }
 
     private String header() {

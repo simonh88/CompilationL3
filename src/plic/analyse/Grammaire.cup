@@ -81,7 +81,7 @@ terminal String    CONSTANTEINT, CONSTANTEBOOL ;
 
 
 terminal Symbol    ECRIRETERM, POINTVIRGULE, VIRGULE, CLASSETERM, FIN, PUBLIQUE ;
-terminal Symbol    PRIVEE, ENTIER, EGAL ;
+terminal Symbol    PRIVEE, ENTIER, EGAL;
 terminal String    IDFTERM, CONSTANTECHAINE ;
 
 /* Non terminals used in the grammar section.  */
@@ -116,7 +116,12 @@ precedence left NON ;
 
 start with SYSTEME ;
 
-SYSTEME ::= CLASSES:c {: RESULT = c; :} ;
+SYSTEME ::= CLASSES:c
+            {:
+                System.out.println("FIN SYSTEME - RESET id");
+                TDS.getInstance().setId(1);
+                RESULT = c;
+            :} ;
 
 CLASSES ::= CLASSES:cs CLASSE:c
             {:
@@ -138,11 +143,13 @@ CLASSE ::= CLASSETERM IDF:i DECLARATIONS:ds FIN
            {:
                 RESULT = new Classe(i, ds, ileft+1);
                 TDS.getInstance().sortieBloc();
+                System.out.println("FIN CLASSE");
            :}
            | CLASSETERM IDF:i FIN
            {:
                 RESULT = new Classe(i, null, ileft+1);
                 TDS.getInstance().sortieBloc();
+                System.out.println("FIN CLASSE");
            :}
            ;
 

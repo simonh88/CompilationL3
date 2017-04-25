@@ -4,21 +4,34 @@ publique entier a;
 publique entier b;
 
 a = 1;
-b = 0;
-ecrire a;
+b = 2;
 
+ecrire "Classe 1\n";
+ecrire "a : ";
+ecrire a;
+ecrire "\nb : ";
+ecrire b;
 
 fin
 
 classe Test2
 
+publique entier c;
+publique entier d;
 publique entier a;
-publique entier b;
 
-a = 2;
-b = 3;
+c = 3;
+d = 4;
+a = 1664;
 
+ecrire "\n\nClasse 2\n";
+ecrire "c : ";
+ecrire c;
+ecrire "\nd : ";
+ecrire d;
+ecrire "\na local : ";
 ecrire a;
+
 
 
 fin

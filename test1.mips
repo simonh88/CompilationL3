@@ -1,9 +1,30 @@
 .data
 str_div_by_0:	.asciiz "ERREUR D'EXECUTION : Division par zero interdite" 
+label_str_1:
+.asciiz "a : "
+
+label_str_6:
+.asciiz "\na local : "
+
+label_str_0:
+.asciiz "Classe 1\n"
+
+label_str_2:
+.asciiz "\nb : "
+
+label_str_3:
+.asciiz "\n\nClasse 2\n"
+
+label_str_5:
+.asciiz "\nd : "
+
+label_str_4:
+.asciiz "c : "
+
 .text
 main :
 move $s7,$sp
-addi $sp, $sp, 0
+addi $sp, $sp, 32
 
 
 
@@ -11,12 +32,51 @@ addi $sp, $sp, 0
 
 li $v0, 1
 
- sw $v0, 0($s7)
+ sw $v0, 12($s7)
+
+
+
+li $v0, 2
+
+ sw $v0, 16($s7)
 
 
 
 
-lw $v0, 0($s7)
+li $v0, 4
+la $a0, label_str_0
+syscall
+
+
+
+
+li $v0, 4
+la $a0, label_str_1
+syscall
+
+
+
+
+lw $v0, 12($s7)
+
+
+move $a0, $v0
+
+li $v0, 1
+
+syscall
+
+
+
+
+li $v0, 4
+la $a0, label_str_2
+syscall
+
+
+
+
+lw $v0, 16($s7)
 
 
 move $a0, $v0
@@ -29,14 +89,78 @@ syscall
 
 
 
-li $v0, 2
+li $v0, 3
 
- sw $v0, 0($s7)
-
-
+ sw $v0, 20($s7)
 
 
-lw $v0, 0($s7)
+
+li $v0, 4
+
+ sw $v0, 24($s7)
+
+
+
+li $v0, 1664
+
+ sw $v0, 28($s7)
+
+
+
+
+li $v0, 4
+la $a0, label_str_3
+syscall
+
+
+
+
+li $v0, 4
+la $a0, label_str_4
+syscall
+
+
+
+
+lw $v0, 20($s7)
+
+
+move $a0, $v0
+
+li $v0, 1
+
+syscall
+
+
+
+
+li $v0, 4
+la $a0, label_str_5
+syscall
+
+
+
+
+lw $v0, 24($s7)
+
+
+move $a0, $v0
+
+li $v0, 1
+
+syscall
+
+
+
+
+li $v0, 4
+la $a0, label_str_6
+syscall
+
+
+
+
+lw $v0, 28($s7)
 
 
 move $a0, $v0
